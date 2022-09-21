@@ -8,7 +8,6 @@ class movableObject extends DrawableObject {
     collectedCoins = 0;
     actualCoin = 0;
 
-
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -41,6 +40,11 @@ class movableObject extends DrawableObject {
     }
 
 
+    jellyfishDead() {
+        return this.energy = 0;
+    }
+
+
     isAboveGround() {
         if (this instanceof Bubble) { // throwable objects should always fall.
             return true
@@ -61,8 +65,9 @@ class movableObject extends DrawableObject {
 
     isCollidingBubble(mo) {
         return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
             this.x < mo.x &&
+
+            this.y + this.height > mo.y &&
             this.y < mo.y + mo.height;
     }
 
@@ -97,10 +102,10 @@ class movableObject extends DrawableObject {
     }
 
 
-    reverse() {
+    reverse(time) {
         setInterval(() => {
             this.otherDirection = !this.otherDirection;
-        }, 5000)
+        }, time)
     }
 
 

@@ -57,6 +57,17 @@ class Character extends movableObject {
         'img/1.Sharkie/6.dead/2.Electro_shock/10.png',
     ];
 
+    SLAP_IMAGES = [
+        'img/1.Sharkie/4.Attack/Fin slap/1.png',
+        'img/1.Sharkie/4.Attack/Fin slap/2.png',
+        'img/1.Sharkie/4.Attack/Fin slap/3.png',
+        'img/1.Sharkie/4.Attack/Fin slap/4.png',
+        'img/1.Sharkie/4.Attack/Fin slap/5.png',
+        'img/1.Sharkie/4.Attack/Fin slap/6.png',
+        'img/1.Sharkie/4.Attack/Fin slap/7.png',
+        'img/1.Sharkie/4.Attack/Fin slap/8.png',
+    ];
+
 
     IMAGES_HURT = [
         'img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
@@ -69,12 +80,18 @@ class Character extends movableObject {
 
     constructor() {
         super().loadImage('img/1.Sharkie/1.IDLE/1.png');
+        this.loadAllImages();
+        this.animate();
+    }
+
+    // noch in movable auslagern
+    loadAllImages() {
         this.loadImages(this.IMAGES_SWIMMING);
         this.loadImages(this.ATTACK_IMAGES);
         this.loadImages(this.IMAGES_WHILENOTMOVING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.animate();
+        this.loadImages(this.SLAP_IMAGES);
     }
 
 
@@ -84,6 +101,7 @@ class Character extends movableObject {
             // this.walking_sound.pause();
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                // && !this.world.barrier.find(b => b.isColliding(this)) das ist später für die barriere
                 this.moveRight();
                 this.otherDirection = false;
                 // this.walking_sound.play();
@@ -136,9 +154,12 @@ class Character extends movableObject {
 
     playMovingAnimations() {
         //Walk Animation
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.playAnimation(this.IMAGES_SWIMMING);
-        }
+        //todo in extra funktion die animationen der bewegungen mit setintervall
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.playAnimation(this.IMAGES_SWIMMING);
+            }
+        }, 300)
 
         if (this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.playAnimation(this.IMAGES_SWIMMING);
@@ -151,6 +172,12 @@ class Character extends movableObject {
         if (this.world.keyboard.D) {
             this.playAnimation(this.ATTACK_IMAGES);
         }
+
+        setInterval(() => {
+            if (this.world.keyboard.SPACE) {
+                this.playAnimation(this.SLAP_IMAGES);
+            }
+        }, 100)
 
     }
 }

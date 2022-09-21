@@ -21,7 +21,7 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-        if (this instanceof Jellyfish || this instanceof Coin || this instanceof Bubble) { // instanceof zeigt den blauen rahmen nur für die ausgewählte klasse an
+        if (this instanceof Jellyfish || this instanceof Coin || this instanceof Bubble || this instanceof Pufferfish) { // instanceof zeigt den blauen rahmen nur für die ausgewählte klasse an
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'blue';

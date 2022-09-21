@@ -7,6 +7,7 @@ class Bubble extends movableObject {
         this.y = y + this.speed;
         this.height = 30;
         this.width = 30;
+
         this.throwBubble();
     }
 
@@ -16,11 +17,11 @@ class Bubble extends movableObject {
         // this.applyGravity();
         if (!world.character.otherDirection) {
             setInterval(() => {
-                this.x += 10;
+                this.x += 7;
             }, 25);
         } else if (world.character.otherDirection) {
             setInterval(() => {
-                this.x -= 10;
+                this.x -= 7;
             }, 25);
         }
     }

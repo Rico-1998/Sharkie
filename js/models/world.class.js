@@ -79,6 +79,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.light);
+        this.addObjectsToMap(this.level.endBoss);
         // this.addObjectsToMap(this.level.barrier);
         this.addObjectsToMap(this.bubbles);
 
@@ -144,15 +145,19 @@ class World {
 
 
     isCollidingWithEnemy() {
-        this.bubbles.forEach((bubble, index) => {
-            this.level.enemies.forEach((enemy, index) => {
-                if (bubble.isCollidingBubble(enemy)) {
-                    console.log('es klappt');
-                    // this.level.enemies.splice(index, 1);
+        this.bubbles.forEach((bubble, indexBubble) => {
+            this.level.enemies.forEach((enemy, indexEnemy) => {
+                if (bubble.isCollidingBubble(enemy, indexEnemy) && this.level.enemies[indexEnemy].type != 'greenPuffer') {
+                    this.bubbles.splice(indexBubble, 1);
+                    enemy.jellyfishDead();
+                    setTimeout(() => {
+                        this.level.enemies.splice(indexEnemy, 1);
+                    }, 2000);
                 }
             })
         })
     }
+
 
 
 }

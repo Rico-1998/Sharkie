@@ -45,14 +45,17 @@ class Endboss extends movableObject {
 
 
     animate() {
-
         let i = setInterval(() => {
-            this.playAnimation(this.IMAGES_INCOMING);
-            if (i == 10) {
-                clearInterval(i);
-            }
-            if (this.currentImage > 10) {
-                this.playAnimation(this.IMAGES_SWIMMING);
+            if (world) {
+                if (world.character.x > 1800) {
+                    this.playAnimation(this.IMAGES_INCOMING);
+                }
+                if (i == 10) {
+                    clearInterval(i);
+                }
+                if (this.currentImage > 10) {
+                    this.playAnimation(this.IMAGES_SWIMMING);
+                }
             }
 
         }, 200)
