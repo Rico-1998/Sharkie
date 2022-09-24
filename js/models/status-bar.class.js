@@ -7,7 +7,7 @@ class StatusBar extends movableObject {
         'img/4. Marcadores/Purple/60_ .png',
         'img/4. Marcadores/Purple/80_ .png',
         'img/4. Marcadores/Purple/100_ .png' // 5
-    ]
+    ];
 
 
     percentage = 100;
@@ -17,8 +17,8 @@ class StatusBar extends movableObject {
         this.loadImages(this.IMAGES);
         this.x = 10;
         this.y = 0;
-        this.width = 175;
-        this.height = 60;
+        this.width = 150;
+        this.height = 50;
         this.setPercentage(100);
     }
 
@@ -30,6 +30,7 @@ class StatusBar extends movableObject {
         this.img = this.imageCache[path];
         this.resolveImageIndex()
     }
+
 
     resolveImageIndex() {
         if (this.percentage == 100) {

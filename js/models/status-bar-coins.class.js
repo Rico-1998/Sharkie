@@ -3,14 +3,14 @@ class StatusBarCoin extends StatusBar {
     percentage = 0;
 
     IMAGES = [
-        'img/4. Marcadores/green/Coin/0_  copia 4.png',
-        'img/4. Marcadores/green/Coin/20_  copia 2.png',
-        'img/4. Marcadores/green/Coin/40_  copia 4.png',
-        'img/4. Marcadores/green/Coin/60_  copia 4.png',
-        'img/4. Marcadores/green/Coin/80_  copia 4.png',
-        'img/4. Marcadores/green/Coin/100_ copia 4.png'
-    ];
+        'img/4. Marcadores/orange/0_  copia 2.png',
+        'img/4. Marcadores/orange/20_  copia.png',
+        'img/4. Marcadores/orange/40_  copia 2.png',
+        'img/4. Marcadores/orange/60_  copia 2.png',
+        'img/4. Marcadores/orange/80_  copia 2.png',
+        'img/4. Marcadores/orange/100_ copia 2.png',
 
+    ];
 
 
     constructor() {
@@ -18,8 +18,8 @@ class StatusBarCoin extends StatusBar {
         this.loadImages(this.IMAGES);
         this.x = 10;
         this.y = 40;
-        this.width = 175;
-        this.height = 60;
+        this.width = 150;
+        this.height = 50;
         this.setPercentage(0);
     }
 

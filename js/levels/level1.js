@@ -1,6 +1,3 @@
-// let pufferfish;
-
-
 const level1 = new Level(
     [
         new Jellyfish(),
@@ -65,6 +62,14 @@ const level1 = new Level(
         new Coin(),
         new Coin(),
         new Coin()
+    ],
+
+    [
+        new Poison(500),
+        new Poison(650),
+        new Poison(900),
+        new Poison(1500),
+        new Poison(1840)
     ],
 
     [

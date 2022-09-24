@@ -5,8 +5,12 @@ class movableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    collectedPoisonBottle = 0;
+    actualPoisonBottle = 0;
     collectedCoins = 0;
     actualCoin = 0;
+
+
 
     applyGravity() {
         setInterval(() => {
@@ -31,7 +35,7 @@ class movableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // Difference in milliseconds;
         timePassed = timePassed / 1000; // Difference in seconds
-        return timePassed < 0.5;
+        return timePassed < 1.5;
     }
 
 
@@ -95,12 +99,19 @@ class movableObject extends DrawableObject {
         this.collectedCoins += 20;
         if (this.collectedCoins > 100) {
             this.collectedCoins = 100;
-            console.log(collectedCoin);
         } else {
             this.actualCoin = new Date().getTime();
         }
     }
 
+    collectPoison() {
+        this.collectedPoisonBottle += 20;
+        if (this.collectedPoisonBottle > 100) {
+            this.collectedPoisonBottle = 100;
+        } else {
+            this.actualPoisonBottle = new Date().getTime();
+        }
+    }
 
     reverse(time) {
         setInterval(() => {

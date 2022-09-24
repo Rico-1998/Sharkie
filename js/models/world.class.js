@@ -7,10 +7,8 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     statusBarCoin = new StatusBarCoin();
+    statusBarPoison = new StatusBarPoison();
     bubbles = [];
-
-
-    // coins = new Coin();
 
 
     constructor(canvas, keyboard) {
@@ -48,7 +46,8 @@ class World {
         })
 
         this.isCollidingWithCoin();
-        this.isCollidingWithEnemy();
+        this.attackJelly();
+        this.attackPuffer();
     }
 
 
@@ -73,6 +72,7 @@ class World {
         // space for fixed objects
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarPoison);
         this.ctx.translate(this.camera_x, 0); // Forward
 
 
@@ -80,6 +80,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.light);
         this.addObjectsToMap(this.level.endBoss);
+        this.addObjectsToMap(this.level.poison);
         // this.addObjectsToMap(this.level.barrier);
         this.addObjectsToMap(this.bubbles);
 
@@ -92,14 +93,14 @@ class World {
         requestAnimationFrame(function () {
             self.draw();
         });
-    }
+    };
 
 
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o)
         });
-    }
+    };
 
 
     addToMap(mo) {
@@ -124,13 +125,13 @@ class World {
         this.ctx.translate(mo.width, 0);
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
-    }
+    };
 
 
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
-    }
+    };
 
 
     isCollidingWithCoin() {
@@ -141,10 +142,17 @@ class World {
                 this.level.coins.splice(index, 1);
             }
         })
-    }
+        this.level.poison.forEach((poison, index) => { // die anzahl der coins und der index wird reingegeben
+            if (this.character.isColliding(poison)) {
+                this.character.collectPoison();
+                this.statusBarPoison.setPercentage(this.character.collectedPoisonBottle);
+                this.level.poison.splice(index, 1);
+            }
+        })
+    };
 
 
-    isCollidingWithEnemy() {
+    attackJelly() {
         this.bubbles.forEach((bubble, indexBubble) => {
             this.level.enemies.forEach((enemy, indexEnemy) => {
                 if (bubble.isCollidingBubble(enemy, indexEnemy) && this.level.enemies[indexEnemy].type != 'greenPuffer') {
@@ -156,7 +164,19 @@ class World {
                 }
             })
         })
-    }
+    };
+
+
+    attackPuffer() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy) && this.level.enemies[index].type == 'greenPuffer' && this.keyboard.SPACE) {
+                enemy.jellyfishDead();
+                setTimeout(() => {
+                    this.level.enemies.splice(index, 1);
+                }, 2000);
+            }
+        })
+    };
 
 
 

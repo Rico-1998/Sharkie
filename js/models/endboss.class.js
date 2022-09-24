@@ -31,8 +31,8 @@ class Endboss extends movableObject {
         'img/2.Enemy/3 Final Enemy/2.floating/10.png',
         'img/2.Enemy/3 Final Enemy/2.floating/11.png',
         'img/2.Enemy/3 Final Enemy/2.floating/12.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/13.png',
-    ]
+        'img/2.Enemy/3 Final Enemy/2.floating/13.png'
+    ];
 
     constructor() {
         super().loadImage(this.IMAGES_INCOMING[0]);
