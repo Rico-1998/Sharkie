@@ -1,5 +1,6 @@
 class DrawableObject {
     img;
+    // img= undefined;
     imageCache = {};
     currentImage = 0;
     x = 120;
@@ -10,7 +11,9 @@ class DrawableObject {
 
     //loadImage('img/test.png')
     loadImage(path) {
+        // if (this.img === undefined) {
         this.img = new Image(); //Diese Zeile ist das gleiche wie this.img = document.getElementById('image') <img id='image' src>
+        // }  ansonsten legt man immer wieder ein neues img an was aber nicht gebraucht wird weil bereits eine instanz img für den aktuellen pfad existiert
         this.img.src = path;
     }
 

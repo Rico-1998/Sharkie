@@ -11,6 +11,7 @@ class World {
     bubbles = [];
 
 
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -19,6 +20,7 @@ class World {
         this.setWorld();
         // this.character = new Character(this);
         this.run();
+        console.log(this.level.endBoss[0]);
     }
 
 
@@ -49,6 +51,7 @@ class World {
         this.isCollidingWithCoin();
         this.attackJelly();
         this.attackPuffer();
+        this.attackEndboss();
     }
 
 
@@ -180,5 +183,20 @@ class World {
     };
 
 
+    attackEndboss() {
+        let boss = this.level.endBoss[0]
 
+        this.bubbles.forEach((bubble, indexBubble) => {
+            if (bubble.isColliding(boss)) {
+                this.endBossgetHurt();
+                this.bubbles.splice(indexBubble, 1);
+                // get hurt muss noch eingefügt werden und eine animation die dann gespielt werden soll
+            }
+        });
+    }
+
+
+    endBossgetHurt() {
+        return this.level.endBoss[0].energy -= 5;
+    }
 }

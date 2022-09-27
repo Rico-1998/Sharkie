@@ -3,21 +3,18 @@ class Pufferfish extends movableObject {
     height = 50;
     width = 50;
     type;
-    playBlowupAnimation = false;
+    playBlowupAnimation = true;
     fishShrinkAnimation = false;
-    intervals = [];
-    count = 0;
-
 
 
     constructor() {
         super();
         this.type = 'greenPuffer';
-        this.reverse('7000');
+        this.reverse(7000);
         this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadAllImages();
-        // this.x = 350 + Math.random() * 2000;
-        this.x = 350
+        this.x = 350 + Math.random() * 2000;
+        // this.x = 350
         this.y = 25 + Math.random() * 350;
         this.animatePufferfish();
         this.playBuffAnimation();
@@ -33,48 +30,60 @@ class Pufferfish extends movableObject {
 
 
     playBuffAnimation() {
-        // setInterval(() => {
+        setInterval(() => {
         if (this.otherDirection) {
             this.getSmall();
-            // setTimeout(() => {
-            // }, 500);
         } else {
-                if (this.count === 0) {
-                    debugger
-                    this.blowUp();
-                    console.log('this count', this.count);
-                }
+            this.blowUp();
         }
-        // }, 250);
+        }, 250);
     }
 
-    // mal versuchen eine variable zuerst auf false zu setzen
+    
     blowUp() {
-        // this.playBlowupAnimation = true;
-        // if(this.playBlowupAnimation) {
-                // let i = setInterval(() => {
-                   this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
-                // }, 300);
-                //     clearInterval(i);
-                //     this.playBlowupAnimation = false;
-                // setTimeout(() => {
-                this.count++;
-                // }, 1500);
-        // }
+        if(this.playBlowupAnimation) {
+            this.timeOutForTransition();
+            this.playBlowupAnimation = false;
+            // die untere zeile dreht den boolean um aus true wird false und umgedreht (toggle)
+            // this.playBlowupAnimation = !this.playBlowupAnimation;
+            let j = setInterval(() => {
+                this.playAnimation(greenPufferFish.IMAGES_BUBBLE_SWIMMING);
+            }, 100);   
+            this.timeForIntervalClear(j);
+            this.fishShrinkAnimation = true;
+        }
     }
 
 
     getSmall() {
-        // console.log('klappt');
+        if(this.fishShrinkAnimation) {
+            this.timeOutForTransition();
+        this.fishShrinkAnimation = false;
 
-        // if (this.otherDirection) {
-        //     this.fishShrinkAnimation = true;
-        //     this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
-        //     setInterval(() => {
-        //         this.playAnimation(greenPufferFish.IMAGES_SWIMMING);
-        //     }, 200);
-        // }
-        // this.fishShrinkAnimation = false;
+        let j = setInterval(() => {
+            this.playAnimation(greenPufferFish.IMAGES_SWIMMING);
+        }, 100);   
+        this.timeForIntervalClear(j);
+        this.playBlowupAnimation = true;
+
+        }
+    }
+
+
+    timeOutForTransition() {
+        let i = setInterval(() => {
+            this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
+        }, 200);
+        setTimeout(() => {
+            clearInterval(i);
+        }, 500);
+    }
+
+
+    timeForIntervalClear(j) {
+        setTimeout(() => {
+            clearInterval(j);
+        }, 6700);
     }
 
 

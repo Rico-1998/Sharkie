@@ -4,6 +4,9 @@ class Jellyfish extends movableObject {
     height = 50;
     width = 40;
     otherDirection = false;
+
+
+
     IMAGES_SWIMMING = [
         'img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png',
         'img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 2.png',
@@ -21,7 +24,7 @@ class Jellyfish extends movableObject {
 
     constructor() {
         super();
-        this.reverse('5000');
+        this.reverse(5000);
         this.loadImage('img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png');
         this.loadImages(this.IMAGES_SWIMMING);
         this.loadImages(this.IMAGES_DEAD_GREEN);
@@ -47,7 +50,6 @@ class Jellyfish extends movableObject {
             }
         }, 200)
     }
-
 
 
 
