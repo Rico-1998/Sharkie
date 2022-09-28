@@ -1,56 +1,93 @@
 class Jellyfish extends movableObject {
 
     y = 100;
-    height = 50;
-    width = 40;
+    height = 60;
+    width = 60;
     otherDirection = false;
+    type;
 
 
-
-    IMAGES_SWIMMING = [
-        'img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png',
-        'img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 2.png',
-        'img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 3.png',
+    IMAGES_SWIMMING_PURPLE = [
+        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png',
     ];
 
-    IMAGES_DEAD_GREEN = [
-        'img/2.Enemy/2 Jelly fish/Dead/green/g1.png',
-        'img/2.Enemy/2 Jelly fish/Dead/green/g2.png',
-        'img/2.Enemy/2 Jelly fish/Dead/green/g3.png',
-        'img/2.Enemy/2 Jelly fish/Dead/green/g4.png',
+    IMAGES_PURPLE_DEAD = [
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png',
+    ];
+
+    IMAGES_SWIMMING_YELLOW = [
+        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
+        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
+    ];
+
+    IMAGES_YELLOW_DEAD = [
+        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png',
     ];
 
 
+    setJelly() {
+        if (this.type === 'purple') {
+            this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
+            // this.swim(this.IMAGES_SWIMMING_PURPLE);
+        } else {
+            this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png');
+        }
+    }
 
-    constructor() {
+
+    constructor(type) {
         super();
-        this.reverse(5000);
-        this.loadImage('img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png');
-        this.loadImages(this.IMAGES_SWIMMING);
-        this.loadImages(this.IMAGES_DEAD_GREEN);
+        this.type = type;
+        this.reverse(10000);
+        this.setJelly();
+        this.loadAllImages();
         this.x = 200 + Math.random() * 2000; // zahl zwischen 200 und 700
         this.speed = 0.5 + Math.random();
         this.animateJelly();
     }
 
 
-    animateJelly() {
-        setInterval(() => {
-            this.swimDirection();
-        }, 100)
-
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD_GREEN);
-                setInterval(() => {
-                    this.y -= 10;
-                }, 1000 / 25)
-            } else {
-                this.playAnimation(this.IMAGES_SWIMMING);
-            }
-        }, 200)
+    loadAllImages() {
+        this.loadImages(this.IMAGES_SWIMMING_PURPLE);
+        this.loadImages(this.IMAGES_SWIMMING_YELLOW);
+        this.loadImages(this.IMAGES_PURPLE_DEAD);
+        this.loadImages(this.IMAGES_YELLOW_DEAD);
     }
 
 
+    animateJelly() {
+        setInterval(() => {
+            this.swimDirection();
+            this.setAnimation(this.IMAGES_PURPLE_DEAD, 'purple', this.IMAGES_SWIMMING_PURPLE);
+            this.setAnimation(this.IMAGES_YELLOW_DEAD, 'yellow', this.IMAGES_SWIMMING_YELLOW);
+        }, 150)
+    }
 
+
+    setAnimation(pictures, colour, img) {
+        if (this.isDead() && this.type === colour) {
+            this.playAnimation(pictures);
+            setInterval(() => {
+                this.y -= 10;
+            }, 1000 / 25)
+        } else if (!this.isDead() && this.type === colour) {
+            this.swim(img);
+        }
+    }
+
+
+    swim(img) {
+        this.playAnimation(img);
+    }
 }

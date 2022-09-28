@@ -13,22 +13,36 @@ class Endboss extends movableObject {
         super()
         this.loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
         this.reverse();
-        this.loadImages(endboss.INCOMING);
-        this.loadImages(endboss.SWIMMING);
-        this.loadImages(endboss.ATTACKING);
+        this.loadAllImages();
         this.x = 2500;
         this.animate();
         this.timeForSwimming();
     }
 
 
+    loadAllImages() {
+        this.loadImages(endboss.INCOMING);
+        this.loadImages(endboss.SWIMMING);
+        this.loadImages(endboss.ATTACKING);
+        this.loadImages(endboss.HURT);
+        this.loadImages(endboss.DEAD);
+    }
+
+
     animate() {
-        setInterval(() => {
+        let i = setInterval(() => {
             if (world && world.character.x > 1800 && this.firstContact) {
                 this.playAnimation(endboss.INCOMING);
                 setTimeout(() => {
                     this.firstContact = false;
                 }, 900);
+            } else if (world && world.level.endBoss[0].isHurt()) {
+                this.playAnimation(endboss.HURT);
+            } else if (this.isDead()) {
+                this.playAnimation(endboss.DEAD)
+                setTimeout(() => {
+                    clearInterval(i);
+                }, 600);
             } else {
                 this.playAnimation(endboss.SWIMMING);
             }

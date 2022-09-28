@@ -1,7 +1,7 @@
 class Pufferfish extends movableObject {
 
-    height = 50;
-    width = 50;
+    height = 60;
+    width = 60;
     type;
     playBlowupAnimation = true;
     fishShrinkAnimation = false;
@@ -83,7 +83,7 @@ class Pufferfish extends movableObject {
     timeForIntervalClear(j) {
         setTimeout(() => {
             clearInterval(j);
-        }, 6700);
+        }, 6200);
     }
 
 
@@ -97,7 +97,7 @@ class Pufferfish extends movableObject {
                 setInterval(() => {
                     this.y -= 10;
                     this.x -= 10;
-                }, 1000 / 25)
+                }, 1000 / 60)
             }
         }, 200);
     }

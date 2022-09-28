@@ -71,7 +71,7 @@ class Character extends movableObject {
                 this.swimmingUp();
             }
 
-            if (this.world.keyboard.DOWN && this.y < 330) {
+            if (this.world.keyboard.DOWN && this.y < 400) {
                 this.swimmingDown();
             }
 

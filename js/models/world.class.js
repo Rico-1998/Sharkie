@@ -43,13 +43,14 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
+                this.character.hit(5);
                 this.statusBar.setPercentage(this.character.energy);
             }
         })
 
         this.isCollidingWithCoin();
-        this.attackJelly();
+        this.attackJelly('purple');
+        this.attackJelly('yellow');
         this.attackPuffer();
         this.attackEndboss();
     }
@@ -72,14 +73,6 @@ class World {
         this.addToMap(this.character);
 
 
-        this.ctx.translate(-this.camera_x, 0); // Back
-        // space for fixed objects
-        this.addToMap(this.statusBar);
-        this.addToMap(this.statusBarCoin);
-        this.addToMap(this.statusBarPoison);
-        this.ctx.translate(this.camera_x, 0); // Forward
-
-
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.light);
@@ -87,6 +80,14 @@ class World {
         this.addObjectsToMap(this.level.poison);
         // this.addObjectsToMap(this.level.barrier);
         this.addObjectsToMap(this.bubbles);
+
+
+        this.ctx.translate(-this.camera_x, 0); // Back
+        // space for fixed objects
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarPoison);
+        this.ctx.translate(this.camera_x, 0); // Forward
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -156,10 +157,10 @@ class World {
     };
 
 
-    attackJelly() {
+    attackJelly(fish) {
         this.bubbles.forEach((bubble, indexBubble) => {
             this.level.enemies.forEach((enemy, indexEnemy) => {
-                if (bubble.isCollidingBubble(enemy, indexEnemy) && this.level.enemies[indexEnemy].type != 'greenPuffer') {
+                if (bubble.isCollidingBubble(enemy, indexEnemy) && this.level.enemies[indexEnemy].type === fish) {
                     this.bubbles.splice(indexBubble, 1);
                     enemy.jellyfishDead();
                     setTimeout(() => {
@@ -188,15 +189,14 @@ class World {
 
         this.bubbles.forEach((bubble, indexBubble) => {
             if (bubble.isColliding(boss)) {
-                this.endBossgetHurt();
+                boss.hit(10);
                 this.bubbles.splice(indexBubble, 1);
-                // get hurt muss noch eingefügt werden und eine animation die dann gespielt werden soll
             }
         });
     }
 
 
     endBossgetHurt() {
-        return this.level.endBoss[0].energy -= 5;
+        return this.level.endBoss[0].energy -= 10;
     }
 }

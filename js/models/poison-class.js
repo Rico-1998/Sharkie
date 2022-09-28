@@ -1,6 +1,6 @@
 class Poison extends movableObject {
 
-    width = 40;
+    width = 60;
     height = 60;
 
     IMAGES = [
@@ -22,6 +22,7 @@ class Poison extends movableObject {
         this.y = 20 + Math.random() * 300;
         this.animatePoison();
     }
+
 
     animatePoison() {
         setInterval(() => {
