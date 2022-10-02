@@ -6,8 +6,9 @@ class Character extends movableObject {
     world;
     // walking_sound = new Audio('audio/walking.mp3');
 
-    constructor() {
+    constructor(world) {
         super();
+        this.world = world;
         this.loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadAllImages();
         this.animate();

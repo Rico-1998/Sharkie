@@ -22,10 +22,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(./img/underwater2.jpg) !important;
+    background-image: url(/img/water.jpg) !important;
     background-position-x: center;
     height: 100vh;
-    background-size: contain;
+    /* background-size: contain; */
+    background-repeat: no-repeat;
 }
 
 .headline {

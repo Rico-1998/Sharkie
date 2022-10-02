@@ -1,12 +1,11 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
+const CANVAS_WIDTH = 800;
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-
 
     document.getElementById('canvas').classList.remove('d-none');
     document.body.classList.add('background');

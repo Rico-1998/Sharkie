@@ -13,8 +13,8 @@ class Pufferfish extends movableObject {
         this.reverse(7000);
         this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadAllImages();
-        this.x = 350 + Math.random() * 2000;
-        // this.x = 350
+        // this.x = 350 + Math.random() * 2000;
+        this.x = 350
         this.y = 25 + Math.random() * 350;
         this.animatePufferfish();
         this.playBuffAnimation();
@@ -71,12 +71,7 @@ class Pufferfish extends movableObject {
 
 
     timeOutForTransition() {
-        let i = setInterval(() => {
-            this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
-        }, 200);
-        setTimeout(() => {
-            clearInterval(i);
-        }, 500);
+        this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
     }
 
 
@@ -85,7 +80,6 @@ class Pufferfish extends movableObject {
             clearInterval(j);
         }, 6200);
     }
-
 
 
     animatePufferfish() {

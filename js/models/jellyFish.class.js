@@ -5,6 +5,7 @@ class Jellyfish extends movableObject {
     width = 60;
     otherDirection = false;
     type;
+    world;
 
 
     IMAGES_SWIMMING_PURPLE = [
@@ -37,6 +38,7 @@ class Jellyfish extends movableObject {
 
 
     setJelly() {
+        // durch switch case ersetzen
         if (this.type === 'purple') {
             this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
             // this.swim(this.IMAGES_SWIMMING_PURPLE);
@@ -46,11 +48,13 @@ class Jellyfish extends movableObject {
     }
 
 
-    constructor(type) {
+    constructor(type, world) {
         super();
+        this.world = world;
         this.type = type;
         this.reverse(10000);
-        this.setJelly();
+        // this.setJelly();
+        this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadAllImages();
         this.x = 200 + Math.random() * 2000; // zahl zwischen 200 und 700
         this.speed = 0.5 + Math.random();
@@ -71,7 +75,7 @@ class Jellyfish extends movableObject {
             this.swimDirection();
             this.setAnimation(this.IMAGES_PURPLE_DEAD, 'purple', this.IMAGES_SWIMMING_PURPLE);
             this.setAnimation(this.IMAGES_YELLOW_DEAD, 'yellow', this.IMAGES_SWIMMING_YELLOW);
-        }, 150)
+        }, 125)
     }
 
 

@@ -1,3 +1,21 @@
+
+// call: loadAnArray ('img/1.Sharkie/3.Swim/', 6(für images swimming vom character))
+
+function loadAnArray(path, count, extention = '.png') {
+    // es wir zu allererst ein aray erzeugt
+    let imgArr = [];
+    // in der for schleife gemacht die bei 1 anfängt weil die bildpfade (1.png zum bsp) immer bei 1 anfangen.
+    // i <= count weil in den parametern der funktion die länge der zu ladenden bilder mit reingegeben wird.
+    // anschliessend wird in das arr der bild pfad(img/1.Sharkie/3.Swim/ zum bsp reingegben und der bildpfad ist immer bis zum letzten / vor dem 1.png oder svg etc)
+    // und die extension wäre dann zum bsp der dateiname (.png, .jpg oder svg usw)
+    for (let i = 1; i <= count; i++) {
+        imgArr.push(path + i + extention);
+    }
+    // zum schluss wird einfach das arr welches jetzt die bildpfade enthält zurück gegeben.
+    return imgArr;
+}
+
+
 let character = {
     IMAGES_SWIMMING: [
         'img/1.Sharkie/3.Swim/1.png',
@@ -113,35 +131,35 @@ let greenPufferFish = {
 let endboss = {
 
 
-    INCOMING: [
-        'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/3.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/4.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/5.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/6.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/7.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/8.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/10.png'
-    ],
+    // INCOMING: [
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/3.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/4.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/5.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/6.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/7.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/8.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
+    //     'img/2.Enemy/3 Final Enemy/1.Introduce/10.png'
+    // ],
 
 
-    SWIMMING: [
-        'img/2.Enemy/3 Final Enemy/2.floating/1.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/2.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/3.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/4.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/5.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/6.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/7.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/8.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/9.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/10.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/11.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/12.png',
-        'img/2.Enemy/3 Final Enemy/2.floating/13.png'
-    ],
+    // SWIMMING: [
+    //     'img/2.Enemy/3 Final Enemy/2.floating/1.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/2.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/3.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/4.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/5.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/6.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/7.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/8.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/9.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/10.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/11.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/12.png',
+    //     'img/2.Enemy/3 Final Enemy/2.floating/13.png'
+    // ],
 
 
     ATTACKING: [

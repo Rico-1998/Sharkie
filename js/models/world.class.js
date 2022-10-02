@@ -1,6 +1,9 @@
 class World {
-    character = new Character();
-    level = level1;
+    // character = new Character();
+    // this ist das schlüsselwort für die aktuelle instanz was bedeutet wenn man this als parameter in eine klassse übergibt hat diese klassse zugriff alle methoden und eigenschaften 
+    character;
+    level;
+    levelNr = 1;
     canvas;
     ctx;
     keyboard;
@@ -16,17 +19,12 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.character = new Character(this);
+        this.level = new Level(this);
         this.draw();
-        this.setWorld();
-        // this.character = new Character(this);
         this.run();
-        console.log(this.level.endBoss[0]);
     }
 
-
-    setWorld() {
-        this.character.world = this;
-    }
 
 
     run() {
@@ -75,7 +73,7 @@ class World {
 
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.light);
+        this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.poison);
         // this.addObjectsToMap(this.level.barrier);
@@ -140,8 +138,8 @@ class World {
 
 
     isCollidingWithCoin() {
-        this.level.coins.forEach((coins, index) => { // die anzahl der coins und der index wird reingegeben
-            if (this.character.isColliding(coins)) {
+        this.level.coins.forEach((coin, index) => { // die anzahl der coins und der index wird reingegeben
+            if (this.character.isColliding(coin)) {
                 this.character.collectCoin();
                 this.statusBarCoin.setPercentage(this.character.collectedCoins);
                 this.level.coins.splice(index, 1);

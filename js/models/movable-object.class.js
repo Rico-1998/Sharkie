@@ -92,6 +92,7 @@ class movableObject extends DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path]; // die variable img aus der movable object klasse entspricht dem bild-pfad aus dem json images walking;
         this.currentImage++;
+
     }
 
 

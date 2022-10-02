@@ -1,16 +1,18 @@
 class Endboss extends movableObject {
-
+    world;
     height = 400;
     width = 250;
     y = 0;
     endBossDirection = false;
     firstContact = true;
+    incoming; // am besten auch immer schreiben arr wenn es ein array ist für die bessere identifikation der variable
+    swimming;
 
 
 
-
-    constructor() {
+    constructor(world) {
         super()
+        this.world = world;
         this.loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
         this.reverse();
         this.loadAllImages();
@@ -21,8 +23,14 @@ class Endboss extends movableObject {
 
 
     loadAllImages() {
-        this.loadImages(endboss.INCOMING);
-        this.loadImages(endboss.SWIMMING);
+        // neu geschriebene funktion zum laden der bildpfade in einer dynamischen for schleife
+        this.incoming = loadAnArray('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
+        this.loadImages(this.incoming);
+        this.swimming = loadAnArray('img/2.Enemy/3 Final Enemy/2.floating/', 13);
+        this.loadImages(this.swimming);
+        //////////////////////
+
+
         this.loadImages(endboss.ATTACKING);
         this.loadImages(endboss.HURT);
         this.loadImages(endboss.DEAD);
@@ -31,12 +39,12 @@ class Endboss extends movableObject {
 
     animate() {
         let i = setInterval(() => {
-            if (world && world.character.x > 1800 && this.firstContact) {
-                this.playAnimation(endboss.INCOMING);
+            if (this.world.character.x > 1800 && this.firstContact) {
+                this.playAnimation(this.incoming);
                 setTimeout(() => {
                     this.firstContact = false;
-                }, 900);
-            } else if (world && world.level.endBoss[0].isHurt()) {
+                }, 700);
+            } else if (this.isHurt()) {
                 this.playAnimation(endboss.HURT);
             } else if (this.isDead()) {
                 this.playAnimation(endboss.DEAD)
@@ -44,35 +52,27 @@ class Endboss extends movableObject {
                     clearInterval(i);
                 }, 600);
             } else {
-                this.playAnimation(endboss.SWIMMING);
+                this.playAnimation(this.swimming);
             }
         }, 200);
-        // this.attack();
+        this.attack();
 
     }
 
 
     attack() {
         setInterval(() => {
-            if (world && this.distance() < 500) {
-                setInterval(() => {
-                    this.playAnimation(endboss.ATTACKING);
-                }, 200);
+            if (this.distance() < 500) {
+                this.playAnimation(endboss.ATTACKING);
             } else {
-                this.playAnimation(endboss.SWIMMING);
+                this.playAnimation(this.swimming);
             }
         }, 200);
     }
 
 
     distance() {
-        setTimeout(() => {
-            if (world) {
-                let distance = this.x - this.world.character.x;
-                console.log(distance);
-                return distance
-            }
-        }, 200);
+        return this.x - this.world.character.x;
     }
 
 
