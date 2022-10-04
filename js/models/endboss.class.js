@@ -7,6 +7,9 @@ class Endboss extends movableObject {
     firstContact = true;
     incoming; // am besten auch immer schreiben arr wenn es ein array ist für die bessere identifikation der variable
     swimming;
+    attacking;
+    hurt;
+    dead;
 
 
 
@@ -21,49 +24,48 @@ class Endboss extends movableObject {
         this.timeForSwimming();
     }
 
-
     loadAllImages() {
-        // neu geschriebene funktion zum laden der bildpfade in einer dynamischen for schleife
-        this.incoming = loadAnArray('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
+        this.incoming = imagePathLoad('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
         this.loadImages(this.incoming);
-        this.swimming = loadAnArray('img/2.Enemy/3 Final Enemy/2.floating/', 13);
+        this.swimming = imagePathLoad('img/2.Enemy/3 Final Enemy/2.floating/', 13);
         this.loadImages(this.swimming);
-        //////////////////////
-
-
-        this.loadImages(endboss.ATTACKING);
-        this.loadImages(endboss.HURT);
-        this.loadImages(endboss.DEAD);
+        this.attacking = imagePathLoad('img/2.Enemy/3 Final Enemy/Attack/', 6);
+        this.loadImages(this.attacking);
+        this.hurt = imagePathLoad('img/2.Enemy/3 Final Enemy/Hurt/', 4);
+        this.loadImages(this.hurt);
+        this.dead = imagePathLoad('img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia ', 6);
+        this.loadImages(this.dead);
     }
 
 
     animate() {
         let i = setInterval(() => {
-            if (this.world.character.x > 1800 && this.firstContact) {
+            if (this.world.character.x > 2000 && this.firstContact) {
                 this.playAnimation(this.incoming);
                 setTimeout(() => {
                     this.firstContact = false;
                 }, 700);
             } else if (this.isHurt()) {
-                this.playAnimation(endboss.HURT);
+                this.playAnimation(this.hurt);
             } else if (this.isDead()) {
-                this.playAnimation(endboss.DEAD)
+                this.playAnimation(this.dead)
                 setTimeout(() => {
                     clearInterval(i);
+                    // this.y -= 10
                 }, 600);
             } else {
                 this.playAnimation(this.swimming);
             }
         }, 200);
-        this.attack();
+        // this.attack();
 
     }
 
 
     attack() {
         setInterval(() => {
-            if (this.distance() < 500) {
-                this.playAnimation(endboss.ATTACKING);
+            if (this.distance() < 500 && !this.firstContact) {
+                this.playAnimation(this.attacking);
             } else {
                 this.playAnimation(this.swimming);
             }

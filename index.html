@@ -8,7 +8,6 @@
     <title>Sharkie</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="/img/icons8-animal-64.png" type="image/x-icon">
-    <script defer src="./js/images.js"></script>
     <script defer src="./js/models/world.class.js"></script>
     <script defer src="./js/models/drawable-object.class.js"></script>
     <script defer src="./js/models/movable-object.class.js"></script>
@@ -31,15 +30,14 @@
 </head>
 
 <body onload="init()">
-    <!-- 
-    <div class="startScreen" id="startscreen">
-        <div class="headline">
 
+    <!-- <div class="startScreen" id="startscreen">
+        <div class="headline">
             <svg viewbox="0 0 100 20">
                 <defs>
                     <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="5%" stop-color="white" />
-                        <stop offset="95%" stop-color="white" />
+                        <stop offset="5%" stop-color="purple" />
+                        <stop offset="95%" stop-color="blue" />
                     </linearGradient>
                     <pattern id="wave" x="0" y="0" width="120" height="20" patternUnits="userSpaceOnUse">
                         <path id="wavePath" d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z"
@@ -50,19 +48,22 @@
                     </pattern>
                 </defs>
                 <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#wave)"
-                    fill-opacity="0.6">Sharkie</text>
+                    fill-opacity="0.8">Sharkie</text>
                 <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#gradient)"
                     fill-opacity="0.1">Sharkie</text>
             </svg>
         </div>
 
         <div class="startContainer">
-            <div class="sharky">
-                <img src="./img/sharkie-celebrating.png">
+
+            <button onclick="showGame()" class="glow-on-hover" type="button">Start</button>
+
+            <div class="info">
+                <img class="settings" src="/img/settings.png" alt="">
+                <img class="sharkie" src="./img/sharkie-celebrating.png">
+                <img class="information" onclick="openHowToPlay()" src="/img/information-button.png" alt="">
             </div>
-            <button onclick="showGame()">
-                <img src="img/6.Botones/Start/1.png">
-            </button>
+            <div id="instructions"></div>
 
         </div>
     </div> -->
@@ -75,3 +76,4 @@
 
 
 <!-- <a href="https://de.freepik.com/fotos-kostenlos/blaues-und-transparentes-wasser-des-mittelmeers-sonnenlicht-mehrere-blasen_19615196.htm#query=wasser&position=19&from_view=keyword">Bild von frimufilms</a> auf Freepik -->
+<!-- <a href="https://www.flaticon.com/de/kostenlose-icons/rahmen" title="rahmen Icons">Rahmen Icons erstellt von Freepik - Flaticon</a> -->

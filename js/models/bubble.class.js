@@ -27,6 +27,7 @@ class Bubble extends movableObject {
                 this.x -= 7;
             }, 25);
         }
+
     }
 
     changeBubble() {

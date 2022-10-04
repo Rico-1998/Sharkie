@@ -71,20 +71,22 @@ class Jellyfish extends movableObject {
 
 
     animateJelly() {
-        setInterval(() => {
+        let id = setInterval(() => {
             this.swimDirection();
             this.setAnimation(this.IMAGES_PURPLE_DEAD, 'purple', this.IMAGES_SWIMMING_PURPLE);
             this.setAnimation(this.IMAGES_YELLOW_DEAD, 'yellow', this.IMAGES_SWIMMING_YELLOW);
         }, 125)
+        allIntervalls.push(id)
     }
 
 
     setAnimation(pictures, colour, img) {
         if (this.isDead() && this.type === colour) {
             this.playAnimation(pictures);
-            setInterval(() => {
+            let id = setInterval(() => {
                 this.y -= 10;
             }, 1000 / 25)
+            allIntervalls.push(id)
         } else if (!this.isDead() && this.type === colour) {
             this.swim(img);
         }

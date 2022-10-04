@@ -5,6 +5,10 @@ class Pufferfish extends movableObject {
     type;
     playBlowupAnimation = true;
     fishShrinkAnimation = false;
+    swimming;
+    bubbleSwimming;
+    transition;
+    dead;
 
 
     constructor() {
@@ -13,8 +17,8 @@ class Pufferfish extends movableObject {
         this.reverse(7000);
         this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadAllImages();
-        // this.x = 350 + Math.random() * 2000;
-        this.x = 350
+        this.x = 350 + Math.random() * 2000;
+        // this.x = 350
         this.y = 25 + Math.random() * 350;
         this.animatePufferfish();
         this.playBuffAnimation();
@@ -22,10 +26,14 @@ class Pufferfish extends movableObject {
 
 
     loadAllImages() {
-        this.loadImages(greenPufferFish.IMAGES_SWIMMING);
-        this.loadImages(greenPufferFish.IMAGES_BUBBLE_SWIMMING);
-        this.loadImages(greenPufferFish.IMAGES_TRANSITION);
-        this.loadImages(greenPufferFish.IMAGES_DEAD);
+        this.swimming = imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim', 5);
+        this.loadImages(this.swimming);
+        this.transition = imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition', 5);
+        this.loadImages(this.transition);
+        this.bubbleSwimming = imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim', 5)
+        this.loadImages(this.bubbleSwimming);
+        this.dead = imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/pufferfish_dead', 3)
+        this.loadImages(this.dead);
     }
 
 
@@ -43,11 +51,10 @@ class Pufferfish extends movableObject {
     blowUp() {
         if(this.playBlowupAnimation) {
             this.timeOutForTransition();
-            this.playBlowupAnimation = false;
-            // die untere zeile dreht den boolean um aus true wird false und umgedreht (toggle)
-            // this.playBlowupAnimation = !this.playBlowupAnimation;
+            this.playBlowupAnimation = !this.playBlowupAnimation;
+            
             let j = setInterval(() => {
-                this.playAnimation(greenPufferFish.IMAGES_BUBBLE_SWIMMING);
+                this.playAnimation(this.bubbleSwimming);
             }, 100);   
             this.timeForIntervalClear(j);
             this.fishShrinkAnimation = true;
@@ -57,11 +64,11 @@ class Pufferfish extends movableObject {
 
     getSmall() {
         if(this.fishShrinkAnimation) {
-            this.timeOutForTransition();
+        this.timeOutForTransition();
         this.fishShrinkAnimation = false;
 
         let j = setInterval(() => {
-            this.playAnimation(greenPufferFish.IMAGES_SWIMMING);
+            this.playAnimation(this.swimming);
         }, 100);   
         this.timeForIntervalClear(j);
         this.playBlowupAnimation = true;
@@ -71,14 +78,14 @@ class Pufferfish extends movableObject {
 
 
     timeOutForTransition() {
-        this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
+        this.playAnimation(this.transition);
     }
 
 
     timeForIntervalClear(j) {
         setTimeout(() => {
             clearInterval(j);
-        }, 6200);
+        }, 6400);
     }
 
 
@@ -87,7 +94,7 @@ class Pufferfish extends movableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(greenPufferFish.IMAGES_DEAD);
+                this.playAnimation(this.dead);
                 setInterval(() => {
                     this.y -= 10;
                     this.x -= 10;

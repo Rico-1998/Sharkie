@@ -12,6 +12,8 @@ class World {
     statusBarCoin = new StatusBarCoin();
     statusBarPoison = new StatusBarPoison();
     bubbles = [];
+    timeForAttack = true;
+
 
 
 
@@ -23,6 +25,16 @@ class World {
         this.level = new Level(this);
         this.draw();
         this.run();
+        this.attackTime();
+    }
+
+
+    clearAllIntervalls() {
+        for (let i = 0; i < allIntervalls.length; i++) {
+            const clearableIntervalls = allIntervalls[i];
+            clearInterval(clearableIntervalls)
+            console.log(clearableIntervalls)
+        }
     }
 
 
@@ -31,6 +43,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
         }, 50);
+        // muss noch geändert werden damit der character nicht so schnell stirbt auf 200ms und this.attack jelly muss in eine andere funktion die alle 50 ms abgefragt wird 
 
         setInterval(() => {
             this.checkForBubbles();
@@ -55,10 +68,20 @@ class World {
 
 
     checkForBubbles() {
-        if (this.keyboard.D) {
-            let bubble = new Bubble(this.character.x + 60, this.character.y + 80);
-            this.bubbles.push(bubble);
+        if (this.statusBarCoin.percentage == 100) {
+            if (this.keyboard.D && this.timeForAttack) {
+                let bubble = new Bubble(this.character.x + 60, this.character.y + 80);
+                this.bubbles.push(bubble);
+                this.timeForAttack = false;
+            }
         }
+    }
+
+
+    attackTime() {
+        setInterval(() => {
+            this.timeForAttack = true;
+        }, 1000)
     }
 
 
@@ -172,7 +195,7 @@ class World {
 
     attackPuffer() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy) && this.level.enemies[index].type == 'greenPuffer' && this.keyboard.SPACE) {
+            if (this.character.isColliding(enemy, index) && this.level.enemies[index].type == 'greenPuffer' && this.keyboard.SPACE) {
                 enemy.jellyfishDead();
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1);

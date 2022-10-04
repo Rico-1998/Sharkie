@@ -3,6 +3,12 @@ class Character extends movableObject {
     y = 120;
     height = 150;
     speed = 7;
+    swimming;
+    attacking;
+    notMoving;
+    hurt;
+    dead;
+    slap;
     world;
     // walking_sound = new Audio('audio/walking.mp3');
 
@@ -16,29 +22,36 @@ class Character extends movableObject {
 
 
     loadAllImages() {
-        this.loadImages(character.IMAGES_SWIMMING);
-        this.loadImages(character.ATTACK_IMAGES);
-        this.loadImages(character.IMAGES_WHILENOTMOVING);
-        this.loadImages(character.IMAGES_HURT);
-        this.loadImages(character.IMAGES_DEAD);
-        this.loadImages(character.SLAP_IMAGES);
+        this.swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
+        this.loadImages(this.swimming);
+        this.attacking = imagePathLoad('img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/', 8);
+        this.loadImages(this.attacking);
+        this.notMoving = imagePathLoad('img/1.Sharkie/1.IDLE/', 18);
+        this.loadImages(this.notMoving);
+        this.hurt = imagePathLoad('img/1.Sharkie/5.Hurt/2.Electric shock/', 3);
+        this.loadImages(this.hurt);
+        this.dead = imagePathLoad('img/1.Sharkie/6.dead/2.Electro_shock/', 10);
+        this.loadImages(this.dead);
+        this.slap = imagePathLoad('img/1.Sharkie/4.Attack/Fin slap/', 8);
+        this.loadImages(this.slap);
     }
 
 
     animate() {
         this.swimDirection();
 
-        setInterval(() => {
+        let id = setInterval(() => {
 
             if (this.isDead()) {
-                this.playAnimation(character.IMAGES_DEAD);
+                this.playAnimation(this.dead);
             }
             else if (this.isHurt()) {
-                this.playAnimation(character.IMAGES_HURT);
+                this.playAnimation(this.hurt);
             } else {
                 this.playMovingAnimations();
             }
-        }, 300)
+        }, 200)
+        allIntervalls.push(id);
     }
 
 
@@ -52,7 +65,7 @@ class Character extends movableObject {
     }
 
     swimDirection() {
-        setInterval(() => {
+        let id = setInterval(() => {
             // this.walking_sound.pause();
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -77,37 +90,32 @@ class Character extends movableObject {
             }
 
             this.world.camera_x = -this.x + 50;
-
+            allIntervalls.push(id)
         }, 1000 / 60)
     }
 
 
     playMovingAnimations() {
         //Walk Animation
-        //todo in extra funktion die animationen der bewegungen mit setintervall
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(character.IMAGES_SWIMMING);
-            }
-        }, 300)
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.swimming);
+        }
 
         if (this.world.keyboard.UP || this.world.keyboard.DOWN) {
-            this.playAnimation(character.IMAGES_SWIMMING);
+            this.playAnimation(this.swimming);
         }
 
         if (!this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
-            this.playAnimation(character.IMAGES_WHILENOTMOVING);
+            this.playAnimation(this.notMoving);
         }
 
         if (this.world.keyboard.D) {
-            this.playAnimation(character.ATTACK_IMAGES);
+            this.playAnimation(this.attacking);
         }
 
-        setInterval(() => {
-            if (this.world.keyboard.SPACE) {
-                this.playAnimation(character.SLAP_IMAGES);
-            }
-        }, 1000)
+        if (this.world.keyboard.SPACE) {
+            this.playAnimation(this.slap);
+        }
 
     }
 }
