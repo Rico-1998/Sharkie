@@ -12,6 +12,7 @@ class movableObject extends DrawableObject {
 
 
 
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -115,9 +116,10 @@ class movableObject extends DrawableObject {
     }
 
     reverse(time) {
-        setInterval(() => {
+        let j = setInterval(() => {
             this.otherDirection = !this.otherDirection;
-        }, time)
+        }, time);
+        allIntervalls.push(j);
     }
 
 

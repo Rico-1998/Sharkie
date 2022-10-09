@@ -5,11 +5,12 @@ class Endboss extends movableObject {
     y = 0;
     endBossDirection = false;
     firstContact = true;
-    incoming; // am besten auch immer schreiben arr wenn es ein array ist für die bessere identifikation der variable
-    swimming;
-    attacking;
-    hurt;
-    dead;
+    incoming = imagePathLoad('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
+    swimming = imagePathLoad('img/2.Enemy/3 Final Enemy/2.floating/', 13);
+    attacking = imagePathLoad('img/2.Enemy/3 Final Enemy/Attack/', 6);
+    hurt = imagePathLoad('img/2.Enemy/3 Final Enemy/Hurt/', 4);
+    dead = imagePathLoad('img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia ', 6);
+    attackAnimation;
 
 
 
@@ -19,57 +20,53 @@ class Endboss extends movableObject {
         this.loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
         this.reverse();
         this.loadAllImages();
-        this.x = 2500;
+        this.x = 3500;
         this.animate();
         this.timeForSwimming();
+        this.attack();
     }
 
+
     loadAllImages() {
-        this.incoming = imagePathLoad('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
         this.loadImages(this.incoming);
-        this.swimming = imagePathLoad('img/2.Enemy/3 Final Enemy/2.floating/', 13);
         this.loadImages(this.swimming);
-        this.attacking = imagePathLoad('img/2.Enemy/3 Final Enemy/Attack/', 6);
         this.loadImages(this.attacking);
-        this.hurt = imagePathLoad('img/2.Enemy/3 Final Enemy/Hurt/', 4);
         this.loadImages(this.hurt);
-        this.dead = imagePathLoad('img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia ', 6);
         this.loadImages(this.dead);
     }
 
-
+    // allintervalls.push({class: 'endboss', fn:'animate' , id: alles was in der setintervall funktion ist})
     animate() {
-        let i = setInterval(() => {
+        allIntervalls.push(setInterval(() => {
             if (this.world.character.x > 2000 && this.firstContact) {
                 this.playAnimation(this.incoming);
+                this.x = 2500
                 setTimeout(() => {
                     this.firstContact = false;
-                }, 700);
+                    this.attackAnimation = true;
+                }, 500);
             } else if (this.isHurt()) {
                 this.playAnimation(this.hurt);
             } else if (this.isDead()) {
                 this.playAnimation(this.dead)
+                this.y -= 30;
                 setTimeout(() => {
                     clearInterval(i);
-                    // this.y -= 10
                 }, 600);
             } else {
-                this.playAnimation(this.swimming);
+                this.attack();
             }
-        }, 200);
-        // this.attack();
+        }, 100));
 
     }
 
 
     attack() {
-        setInterval(() => {
-            if (this.distance() < 500 && !this.firstContact) {
-                this.playAnimation(this.attacking);
-            } else {
-                this.playAnimation(this.swimming);
-            }
-        }, 200);
+        if (this.distance() < 500 && !this.firstContact && this.attackAnimation) {
+            this.playAnimation(this.attacking);
+        } else {
+            this.playAnimation(this.swimming);
+        }
     }
 
 
@@ -79,9 +76,10 @@ class Endboss extends movableObject {
 
 
     timeForSwimming() {
-        setInterval(() => {
+        let i = setInterval(() => {
             this.swimDirection();
         }, 200)
+        allIntervalls.push(i);
     }
 
 
@@ -95,8 +93,9 @@ class Endboss extends movableObject {
 
 
     reverse() {
-        setInterval(() => {
+        let i = setInterval(() => {
             this.endBossDirection = !this.endBossDirection;
         }, 5000)
+        allIntervalls.push(i);
     }
 }

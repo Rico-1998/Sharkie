@@ -3,12 +3,12 @@ class Character extends movableObject {
     y = 120;
     height = 150;
     speed = 7;
-    swimming;
-    attacking;
-    notMoving;
-    hurt;
-    dead;
-    slap;
+    swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
+    attacking = imagePathLoad('img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/', 8);
+    notMoving = imagePathLoad('img/1.Sharkie/1.IDLE/', 18);
+    hurt = imagePathLoad('img/1.Sharkie/5.Hurt/1.Poisoned/', 4);
+    dead = imagePathLoad('img/1.Sharkie/6.dead/1.Poisoned/', 12);
+    slap = imagePathLoad('img/1.Sharkie/4.Attack/Fin slap/', 8);
     world;
     // walking_sound = new Audio('audio/walking.mp3');
 
@@ -18,21 +18,17 @@ class Character extends movableObject {
         this.loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadAllImages();
         this.animate();
+        setTimeout(() => {
+        }, 200);
     }
 
 
     loadAllImages() {
-        this.swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
         this.loadImages(this.swimming);
-        this.attacking = imagePathLoad('img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/', 8);
         this.loadImages(this.attacking);
-        this.notMoving = imagePathLoad('img/1.Sharkie/1.IDLE/', 18);
         this.loadImages(this.notMoving);
-        this.hurt = imagePathLoad('img/1.Sharkie/5.Hurt/2.Electric shock/', 3);
         this.loadImages(this.hurt);
-        this.dead = imagePathLoad('img/1.Sharkie/6.dead/2.Electro_shock/', 10);
         this.loadImages(this.dead);
-        this.slap = imagePathLoad('img/1.Sharkie/4.Attack/Fin slap/', 8);
         this.loadImages(this.slap);
     }
 
@@ -69,6 +65,7 @@ class Character extends movableObject {
             // this.walking_sound.pause();
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                // wenn nicht kollidiert dann die nächsten 2zeilen ausführen sonst nicht
                 // && !this.world.barrier.find(b => b.isColliding(this)) das ist später für die barriere
                 this.moveRight();
                 this.otherDirection = false;

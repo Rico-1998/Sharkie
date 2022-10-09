@@ -2,6 +2,7 @@ class Poison extends movableObject {
 
     width = 60;
     height = 60;
+    collected = false;
 
     IMAGES = [
         'img/4. Marcadores/Posiขn/Animada/1.png',
@@ -19,14 +20,25 @@ class Poison extends movableObject {
         this.loadImage(this.IMAGES[0])
         this.loadImages(this.IMAGES);
         this.x = x;
-        this.y = 20 + Math.random() * 300;
+        this.y = 40 + Math.random() * 300;
         this.animatePoison();
+        this.goUp();
     }
 
 
     animatePoison() {
-        setInterval(() => {
+        let i = setInterval(() => {
             this.playAnimation(this.IMAGES);
-        }, 200);
+        }, 100);
+        allIntervalls.push(i);
+    }
+
+
+    goUp() {
+        setInterval(() => {
+            if (this.collected) {
+                this.y -= 30;
+            }
+        }, 1000 / 60);
     }
 }

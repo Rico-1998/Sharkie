@@ -33,7 +33,7 @@ class World {
         for (let i = 0; i < allIntervalls.length; i++) {
             const clearableIntervalls = allIntervalls[i];
             clearInterval(clearableIntervalls)
-            console.log(clearableIntervalls)
+            // console.log(clearableIntervalls)
         }
     }
 
@@ -42,23 +42,25 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 50);
+        }, 125);
         // muss noch geändert werden damit der character nicht so schnell stirbt auf 200ms und this.attack jelly muss in eine andere funktion die alle 50 ms abgefragt wird 
 
         setInterval(() => {
             this.checkForBubbles();
         }, 200)
+
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit(5);
+                    this.statusBar.setPercentage(this.character.energy);
+                }
+            })
+        }, 200);
     }
 
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit(5);
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        })
-
         this.isCollidingWithCoin();
         this.attackJelly('purple');
         this.attackJelly('yellow');
@@ -87,7 +89,6 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // diese funktion cleared das Canvas immer direkt zu anfang
-
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backGroundObjects);
@@ -99,19 +100,13 @@ class World {
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.poison);
-        // this.addObjectsToMap(this.level.barrier);
+        this.addObjectsToMap(this.level.barrier);
         this.addObjectsToMap(this.bubbles);
 
+        this.allStatusBars()
 
-        this.ctx.translate(-this.camera_x, 0); // Back
-        // space for fixed objects
-        this.addToMap(this.statusBar);
-        this.addToMap(this.statusBarCoin);
-        this.addToMap(this.statusBarPoison);
-        this.ctx.translate(this.camera_x, 0); // Forward
 
         this.ctx.translate(-this.camera_x, 0);
-
 
 
         // draw() wird immer wieder aufgerufen
@@ -120,6 +115,16 @@ class World {
             self.draw();
         });
     };
+
+
+    allStatusBars() {
+        this.ctx.translate(-this.camera_x, 0); // Back
+        // space for fixed objects
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarPoison);
+        this.ctx.translate(this.camera_x, 0); // Forward
+    }
 
 
     addObjectsToMap(objects) {
@@ -162,17 +167,23 @@ class World {
 
     isCollidingWithCoin() {
         this.level.coins.forEach((coin, index) => { // die anzahl der coins und der index wird reingegeben
-            if (this.character.isColliding(coin)) {
+            if (this.character.isColliding(coin, index)) {
                 this.character.collectCoin();
                 this.statusBarCoin.setPercentage(this.character.collectedCoins);
-                this.level.coins.splice(index, 1);
+                this.level.coins[index].collected = true;
+                setTimeout(() => {
+                    this.level.coins.splice(index, 1);
+                }, 70);
             }
         })
         this.level.poison.forEach((poison, index) => { // die anzahl der coins und der index wird reingegeben
             if (this.character.isColliding(poison)) {
                 this.character.collectPoison();
                 this.statusBarPoison.setPercentage(this.character.collectedPoisonBottle);
-                this.level.poison.splice(index, 1);
+                this.level.poison[index].collected = true;
+                setTimeout(() => {
+                    this.level.poison.splice(index, 1);
+                }, 70);
             }
         })
     };
@@ -209,7 +220,7 @@ class World {
         let boss = this.level.endBoss[0]
 
         this.bubbles.forEach((bubble, indexBubble) => {
-            if (bubble.isColliding(boss)) {
+            if (bubble.isColliding(boss) && this.statusBarPoison.percentage == 100) {
                 boss.hit(10);
                 this.bubbles.splice(indexBubble, 1);
             }

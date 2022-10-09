@@ -8,7 +8,7 @@ class Level {
     level_end_x = 2700;
     coins = [];
     poison = [];
-    // barrier = [];
+    barrier = [];
 
     constructor(world) {
         this.world = world;
@@ -22,7 +22,7 @@ class Level {
         this.endBoss.push(new Endboss(this.world));
         this.lights.push(new Light());
         this.loadCoinsandPoison(nr);
-        // this.barrier.push(new Barrier());
+        this.barrier.push(new Barrier());
         this.loadBackgroundImages();
     }
 
@@ -34,6 +34,7 @@ class Level {
             this.enemies.push(new Jellyfish('yellow', this.world));
             this.enemies.push(new Pufferfish());
         }
+        this.enemies.push(new Jellyfish('electric', this.world));
     }
 
 

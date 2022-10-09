@@ -5,36 +5,13 @@ class Jellyfish extends movableObject {
     width = 60;
     otherDirection = false;
     type;
+    yellowSwimming = imagePathLoad('img/2.Enemy/2 Jelly fish/Regular damage/Yellow ', 4);
+    yellowDead = imagePathLoad('img/2.Enemy/2 Jelly fish/Dead/Yellow/y', 4)
+    purpleSwimming = imagePathLoad('img/2.Enemy/2 Jelly fish/Regular damage/Lila ', 4)
+    purpleDead = imagePathLoad('img/2.Enemy/2 Jelly fish/Dead/Lila/L', 4);
+    electricJelly = imagePathLoad('img/2.Enemy/2 Jelly fish/S｣per dangerous/Green ', 4);
+    electricJellyDead = imagePathLoad('img/2.Enemy/2 Jelly fish/Dead/green/g', 4);
     world;
-
-
-    IMAGES_SWIMMING_PURPLE = [
-        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png',
-    ];
-
-    IMAGES_PURPLE_DEAD = [
-        'img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png',
-    ];
-
-    IMAGES_SWIMMING_YELLOW = [
-        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
-        'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
-    ];
-
-    IMAGES_YELLOW_DEAD = [
-        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png',
-        'img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png',
-    ];
 
 
     setJelly() {
@@ -56,25 +33,27 @@ class Jellyfish extends movableObject {
         // this.setJelly();
         this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadAllImages();
-        this.x = 200 + Math.random() * 2000; // zahl zwischen 200 und 700
+        this.x = 200 + Math.random() * 2000;
         this.speed = 0.5 + Math.random();
         this.animateJelly();
     }
 
 
     loadAllImages() {
-        this.loadImages(this.IMAGES_SWIMMING_PURPLE);
-        this.loadImages(this.IMAGES_SWIMMING_YELLOW);
-        this.loadImages(this.IMAGES_PURPLE_DEAD);
-        this.loadImages(this.IMAGES_YELLOW_DEAD);
+        this.loadImages(this.yellowSwimming);
+        this.loadImages(this.yellowDead);
+        this.loadImages(this.purpleSwimming);
+        this.loadImages(this.purpleDead);
+        this.loadImages(this.electricJelly);
+        this.loadImages(this.electricJellyDead);
     }
 
 
     animateJelly() {
         let id = setInterval(() => {
             this.swimDirection();
-            this.setAnimation(this.IMAGES_PURPLE_DEAD, 'purple', this.IMAGES_SWIMMING_PURPLE);
-            this.setAnimation(this.IMAGES_YELLOW_DEAD, 'yellow', this.IMAGES_SWIMMING_YELLOW);
+            this.setAnimation(this.purpleDead, 'purple', this.purpleSwimming);
+            this.setAnimation(this.yellowDead, 'yellow', this.yellowSwimming);
         }, 125)
         allIntervalls.push(id)
     }

@@ -14,7 +14,6 @@ function init() {
     document.getElementById('canvas').classList.remove('d-none');
     document.body.classList.add('background');
 
-
     console.log('my character is', world.character);
 }
 

@@ -2,27 +2,34 @@ class Coin extends movableObject {
 
     width = 40;
     height = 40;
-
-    COINS = [
-        'img/4. Marcadores/1. Coins/1.png',
-        'img/4. Marcadores/1. Coins/2.png',
-        'img/4. Marcadores/1. Coins/3.png',
-        'img/4. Marcadores/1. Coins/4.png'
-    ];
+    collected = false;
+    coinImg = imagePathLoad('img/4. Marcadores/1. Coins/', 4);
 
     constructor() {
         super()
         this.loadImage('img/4. Marcadores/1. Coins/3.png');
-        this.loadImages(this.COINS);
+        this.loadImages(this.coinImg);
         this.x = 200 + Math.random() * 2000; // zahl zwischen 200 und 2100
-        this.y = 10 + Math.random() * 250;
+        this.y = 40 + Math.random() * 250;
         this.animateCoin();
+        this.goUp();
     }
 
 
     animateCoin() {
-        setInterval(() => {
-            this.playAnimation(this.COINS);
+        let i = setInterval(() => {
+            this.playAnimation(this.coinImg);
         }, 1000 / 5);
+        allIntervalls.push(i);
     }
+
+
+    goUp() {
+        setInterval(() => {
+            if (this.collected) {
+                this.y -= 30;
+            }
+        }, 1000 / 60);
+    }
+
 }

@@ -4,14 +4,11 @@ class Barrier extends movableObject {
     y = 0;
     height = 500;
     width = 600;
-
-    IMAGES_BARRIER = [
-        'img/3. Background/Barrier/1.png',
-        'img/3. Background/Barrier/2.png',
-        'img/3. Background/Barrier/3.png'
-    ]
+    imagesBarrier;
 
     constructor() {
-        super().loadImage(this.IMAGES_BARRIER[0]);
+        super()
+        this.loadImage('img/3. Background/Barrier/1.png');
+        this.imagesBarrier = imagePathLoad('img/3. Background/Barrier/', 3);
     }
 }

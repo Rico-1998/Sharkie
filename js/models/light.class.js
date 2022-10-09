@@ -21,9 +21,10 @@ class Light extends movableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let i = setInterval(() => {
             this.moveLeft();
         }, 1000 / 60);
+        allIntervalls.push(i)
     }
 
 
