@@ -22,8 +22,8 @@ class Level {
         this.endBoss.push(new Endboss(this.world));
         this.lights.push(new Light());
         this.loadCoinsandPoison(nr);
-        this.barrier.push(new Barrier());
         this.loadBackgroundImages();
+        this.loadBarriers();
     }
 
 
@@ -35,6 +35,14 @@ class Level {
             this.enemies.push(new Pufferfish());
         }
         this.enemies.push(new Jellyfish('electric', this.world));
+    }
+
+
+    loadBarriers() {
+        this.barrier.push(new Barrier('top', 750, 0, 200, 600));
+        this.barrier.push(new Barrier('rock', 1200, 400, 300, 200));
+        this.barrier.push(new Barrier('horizontal', 1800, 400, 200, 200));
+        this.barrier.push(new Barrier('bottom', 750, 400, 150, 600));
     }
 
 

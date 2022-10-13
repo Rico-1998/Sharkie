@@ -143,7 +143,7 @@ class World {
         mo.drawFrame(this.ctx);
         mo.drawFrameCharacter(this.ctx);
         mo.drawFrameEndboss(this.ctx);
-        // mo.drawFrameBarrier(this.ctx);
+        mo.drawFrameBarrier(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
