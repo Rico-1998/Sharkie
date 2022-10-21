@@ -10,21 +10,30 @@
     /* Legacy iOS */
 }
 
-body {
+* {
     margin: 0;
-    /* background-image: url('img/3. Background/Legacy/Dark/1.png');
-    background-size: cover;
-    height: 100vh; */
+    padding: 0;
+}
+
+body {
+    height: 100vh;
 }
 
 .background {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url(/img/water.jpg) !important;
-    background-position-x: center;
     height: 100vh;
-    background-repeat: no-repeat;
+    width: 100%;
+}
+
+.mainContainer {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    display: flex;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .headline {
@@ -40,6 +49,9 @@ body {
     background-image: url('img/3. Background/Legacy/Dark/1.png');
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
+    position: absolute;
+    z-index: 800;
+    width: 100%;
 }
 
 .startContainer {
@@ -172,8 +184,153 @@ body {
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
+}
+
+.closingBox {
+    display: flex;
+    height: 90%;
+    margin-left: 20px;
+}
+
+.closingBox img {
+    height: 30px;
+    filter: opacity(0.5);
+    rotate: 45deg;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+}
+
+.moveDirection {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    display: flex;
+    justify-content: center;
+}
+
+table tbody tr {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.right {
+    rotate: 180deg;
+}
+
+.moveBox {
+    height: 40px;
+    width: 100px;
+    border-radius: 15px;
+    background-color: rgb(210, 167, 235);
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attackContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attackContainer td {
+    margin-bottom: 20px;
+}
+
+.spaceBox {
+    height: 40px;
+    width: 200px;
+    border-radius: 15px;
+    background-color: rgb(210, 167, 235);
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moveBox span {
+    font-size: 25px;
+}
+
+.tasks {
+    padding-top: 100px;
+}
+
+.description {
+    font-size: 21px;
+}
+
+.task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.task div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border-radius: 20px;
+    border: 4px solid rgb(156, 7, 242);
+    padding-inline: 50px;
+    background-color: rgb(181, 151, 198);
+}
+
+.taskImg {
+    width: 50px;
+    height: 50px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.taskGif {
+    width: 250px;
+    height: 190px;
+    padding: 10px 10px 10px 0px;
+}
+
+.gifDiv {
+    padding-inline: unset !important;
+}
+
+.endbossImg {
+    height: 190px;
+    padding-right: 20px;
+}
+
+.enemyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.enemyBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    border-radius: 20px;
+    border: 4px solid rgb(156, 7, 242);
+    padding-inline: 50px;
+    background-color: rgb(181, 151, 198);
+    width: 80%;
 }
 
 .content {
@@ -183,18 +340,18 @@ body {
 .content {
     font-family: cursive;
     --angle: 0deg;
-    width: 500px;
-    height: 500px;
+    width: 700px;
+    height: 600px;
     border: 6px solid;
     border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
     animation: 10s rotate linear infinite;
-    display: flex;
     justify-content: center;
     color: white;
     background: rgb(160, 10, 250);
     background: radial-gradient(circle, rgba(160, 10, 250, 1) 0%, rgba(207, 213, 247, 0.22034751400560226) 100%);
-
+    overflow-y: auto;
 }
+
 
 @keyframes rotate {
     to {
@@ -210,8 +367,63 @@ body {
 
 canvas {
     background-color: black;
+    width: 100%;
+    margin-right: 50px;
+    margin-left: 50px;
+    height: 500px;
+}
+
+.mainSettings {
+    position: absolute;
+    right: 75px;
+    top: 120px;
+    filter: invert(1);
+}
+
+.mainSettings img {
+    height: 30px;
+    cursor: pointer;
 }
 
 .d-none {
     display: none;
+}
+
+@media screen and (orientation: portrait) {
+    .background {
+        width: 100vh;
+    }
+
+    .startContainer {
+        margin-top: 100px;
+    }
+
+    .startScreen {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .info {
+        height: 100px;
+    }
+
+    /* .mainContainer,
+    .background {
+        rotate: 90deg;
+    }
+
+    .startScreen {
+        width: 100vh;
+        background-size: 100vh 100vw;
+    }
+
+    .background {
+        height: 100vh;
+        width: 100vh;
+    }
+
+    canvas {
+        height: 375px;
+        width: unset;
+    } */
 }

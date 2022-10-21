@@ -71,18 +71,17 @@ class movableObject extends DrawableObject {
 
 
     collidingBarrier(collidingObj) {
-        if (this.isCollidingforBarrier(collidingObj)) {
+        if (this.isCollidingXandY(collidingObj)) {
             // Calculate the distance between centers
-            const diffX = this.centerX() - collidingObj.centerX();
-            const diffY = this.centerY() - collidingObj.centerY();
+            const diffX = this.centerX() - (collidingObj.centerX());
+            const diffY = this.centerY() - (collidingObj.centerY());
             // Calculate the minimum distance to separate along X and Y
-            let minDistX = this.width / 2 + collidingObj.width / 2,
-                minDistY = this.height / 2 + collidingObj.height / 2;
+            let minDistX = (this.width / 2) + (collidingObj.width / 2),
+                minDistY = (this.height / 50) + (collidingObj.height / 2);
             // Calculate the depth of collision for both the X and Y axis
             let depthX = diffX > 0 ? minDistX - diffX : -minDistX - diffX,
                 depthY = diffY > 0 ? minDistY - diffY : -minDistY - diffY;
 
-            //funktion in funktion übergeben
             // if(diffX > 0) {
             //     depthX =  minDistX - diffX;
             // } else {
@@ -90,7 +89,6 @@ class movableObject extends DrawableObject {
             // } zeile 210-214 ist das gleiche wie in zeile 208; (ternary operator so heisst diese schreibweise)
             // so eine schreibweise nur für sehr einfache if abfragen die nur maximal 2 möglichkeiten zulassen bsp. boolean und für variablen zuweisung
             // ? bedeutet then und also wenn die if bedingung true ist dann soll er was machen und : bedeutet else
-            // flag ist ein boolean;
 
 
             // having the depth, pick the smaller depth and move along that axis
@@ -114,20 +112,21 @@ class movableObject extends DrawableObject {
 
     // character.isColliding(Jellyfish);
     isColliding(mo) {
-        return this.x - 30 + this.width > mo.x &&
-            this.y + this.height > mo.y + 30 &&
-            this.x < mo.x + 30 &&
-            this.y + 65 < mo.y + mo.height;
+        return this.x - this.offsets.x + this.width > mo.x &&
+            this.y + this.height > mo.y + this.offsets.x &&
+            this.x < mo.x + this.offsets.x &&
+            this.y + this.offsets.moY < mo.y + mo.height;
     }
 
 
-    isCollidingforBarrier(mo) {
-        return !(
-            this.x > mo.x + mo.width - 20 ||
-            this.x + this.width - 20 < mo.x ||
-            this.y > mo.y + mo.height - 130 ||
-            this.y + this.height - 30 < mo.y
-        )
+    isCollidingXandY(mo) {
+        return (
+            this.x - this.offsets.x + this.width > mo.x && // rechts nach links
+            this.x + this.offsets.x < mo.x + mo.width && // links nach rechts
+
+            this.y + this.height - this.offsets.barrierBottom > mo.y && // oben nach unten
+            this.y + this.offsets.barrierTop < mo.y + mo.height // unten nach oben
+        );
     }
 
 

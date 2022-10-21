@@ -20,7 +20,7 @@ class Endboss extends movableObject {
         this.loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
         this.reverse();
         this.loadAllImages();
-        this.x = 3500;
+        this.x = 4500;
         this.animate();
         this.timeForSwimming();
         this.attack();
@@ -38,13 +38,13 @@ class Endboss extends movableObject {
     // allintervalls.push({class: 'endboss', fn:'animate' , id: alles was in der setintervall funktion ist})
     animate() {
         allIntervalls.push(setInterval(() => {
-            if (this.world.character.x > 2000 && this.firstContact) {
+            if (this.world.character.x > 2800 && this.firstContact) {
                 this.playAnimation(this.incoming);
-                this.x = 2500
+                this.x = 3000
                 setTimeout(() => {
                     this.firstContact = false;
                     this.attackAnimation = true;
-                }, 500);
+                }, 300);
             } else if (this.isHurt()) {
                 this.playAnimation(this.hurt);
             } else if (this.isDead()) {

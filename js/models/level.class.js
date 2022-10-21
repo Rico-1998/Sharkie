@@ -5,7 +5,7 @@ class Level {
     endBoss = [];
     lights = [];
     backGroundObjects = [];
-    level_end_x = 2700;
+    level_end_x = 3200;
     coins = [];
     poison = [];
     barrier = [];
@@ -18,7 +18,7 @@ class Level {
 
 
     initLevel(nr) {
-        this.loadEnemys(nr);
+        this.loadEnemys();
         this.endBoss.push(new Endboss(this.world));
         this.lights.push(new Light());
         this.loadCoinsandPoison(nr);
@@ -27,27 +27,37 @@ class Level {
     }
 
 
-    loadEnemys(nr) {
+    loadEnemys() {
         // nr * 4 wird angegeben weil anhand der level nr multipliziert mit 4 wird die anzahl der gegner angegeben
-        for (let i = 0; i < nr * 4; i++) {
-            this.enemies.push(new Jellyfish('purple', this.world));
-            this.enemies.push(new Jellyfish('yellow', this.world));
-            this.enemies.push(new Pufferfish());
-        }
-        this.enemies.push(new Jellyfish('electric', this.world));
+        // for (let i = 0; i < nr * 4; i++) {
+        this.enemies.push(new Jellyfish('purple', this.world, 300));
+        this.enemies.push(new Jellyfish('purple', this.world, 900));
+        this.enemies.push(new Jellyfish('purple', this.world, 1500));
+        this.enemies.push(new Jellyfish('purple', this.world, 2000));
+        this.enemies.push(new Jellyfish('yellow', this.world, 600));
+        this.enemies.push(new Jellyfish('yellow', this.world, 1200));
+        this.enemies.push(new Jellyfish('yellow', this.world, 2200));
+        this.enemies.push(new Jellyfish('yellow', this.world, 1400));
+        this.enemies.push(new Pufferfish());
+        this.enemies.push(new Pufferfish());
+        this.enemies.push(new Pufferfish());
+        this.enemies.push(new Pufferfish());
+        // }
+        this.enemies.push(new Jellyfish('electric', this.world, 2700));
     }
 
 
     loadBarriers() {
-        this.barrier.push(new Barrier('top', 750, 0, 200, 600));
-        this.barrier.push(new Barrier('rock', 1200, 400, 300, 200));
-        this.barrier.push(new Barrier('horizontal', 1800, 400, 200, 200));
-        this.barrier.push(new Barrier('bottom', 750, 400, 150, 600));
+        this.barrier.push(new Barrier('top', 350, -52, 200, 600));
+        this.barrier.push(new Barrier('rock', 1700, 300, 200, 300));
+        this.barrier.push(new Barrier('top', 1500, -52, 200, 700));
+        this.barrier.push(new Barrier('horizontal', 2300, 200, 300, 300));
+        this.barrier.push(new Barrier('bottom', 550, 350, 150, 600));
     }
 
 
     loadCoinsandPoison(nr) {
-        let arrPosionPosition = [500, 650, 900, 1500, 1840];
+        let arrPosionPosition = [500, 650, 900, 1500, 2340];
         for (let i = 0; i < nr * 5; i++) {
             this.coins.push(new Coin());
             this.poison.push(new Poison(arrPosionPosition[i]));

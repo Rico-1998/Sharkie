@@ -1,6 +1,6 @@
 class Jellyfish extends movableObject {
 
-    y = 100;
+    y = 150;
     height = 60;
     width = 60;
     otherDirection = false;
@@ -25,16 +25,16 @@ class Jellyfish extends movableObject {
     }
 
 
-    constructor(type, world) {
+    constructor(type, world, x) {
         super();
         this.world = world;
         this.type = type;
-        this.reverse(10000);
+        this.reverse(6000);
         this.electricJellyProperties();
         // this.setJelly();
         this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadAllImages();
-        this.x = 200 + Math.random() * 2000;
+        this.x = x;
         this.speed = 0.5 + Math.random();
         this.animateJelly();
     }
@@ -44,7 +44,7 @@ class Jellyfish extends movableObject {
         if (this.type == 'electric') {
             this.height = 80;
             this.width = 80;
-            this.x = 1500;
+            // theta is: arccos(1-(d/r)^2/2)
         }
     }
 

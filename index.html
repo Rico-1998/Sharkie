@@ -29,46 +29,57 @@
     <script defer src="./js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="">
 
-    <!-- <div class="startScreen" id="startscreen">
-        <div class="headline">
-            <svg viewbox="0 0 100 20">
-                <defs>
-                    <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="5%" stop-color="purple" />
-                        <stop offset="95%" stop-color="blue" />
-                    </linearGradient>
-                    <pattern id="wave" x="0" y="0" width="120" height="20" patternUnits="userSpaceOnUse">
-                        <path id="wavePath" d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z"
-                            mask="url(#mask)" fill="url(#gradient)">
-                            <animateTransform attributeName="transform" begin="0s" dur="1.5s" type="translate"
-                                from="0,0" to="40,0" repeatCount="indefinite" />
-                        </path>
-                    </pattern>
-                </defs>
-                <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#wave)"
-                    fill-opacity="0.8">Sharkie</text>
-                <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#gradient)"
-                    fill-opacity="0.1">Sharkie</text>
-            </svg>
-        </div>
+    <div>
+        <img src="./img/background2.jpg" class="background">
 
-        <div class="startContainer">
+        <div class="mainContainer">
+            <div class="startScreen" id="startscreen">
+                <div class="headline">
+                    <svg viewbox="0 0 100 20">
+                        <defs>
+                            <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+                                <stop offset="5%" stop-color="purple" />
+                                <stop offset="95%" stop-color="blue" />
+                            </linearGradient>
+                            <pattern id="wave" x="0" y="0" width="120" height="20" patternUnits="userSpaceOnUse">
+                                <path id="wavePath"
+                                    d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z"
+                                    mask="url(#mask)" fill="url(#gradient)">
+                                    <animateTransform attributeName="transform" begin="0s" dur="1.5s" type="translate"
+                                        from="0,0" to="40,0" repeatCount="indefinite" />
+                                </path>
+                            </pattern>
+                        </defs>
+                        <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#wave)"
+                            fill-opacity="0.8">Sharkie</text>
+                        <text text-anchor="middle" x="50" y="15" font-size="17" fill="url(#gradient)"
+                            fill-opacity="0.1">Sharkie</text>
+                    </svg>
+                </div>
 
-            <button onclick="showGame()" class="glow-on-hover" type="button">Start</button>
+                <div class="startContainer">
 
-            <div class="info">
-                <img class="settings" src="/img/settings.png" alt="">
-                <img class="sharkie" src="./img/sharkie-celebrating.png">
-                <img class="information" onclick="openHowToPlay()" src="/img/information-button.png" alt="">
+                    <button onclick="showGame()" class="glow-on-hover" type="button">Start</button>
+
+                    <div class="info">
+                        <img class="settings" src="/img/settings.png" alt="">
+                        <img class="sharkie" src="./img/sharkie-celebrating.png">
+                        <img class="information" onclick="openHowToPlay()" src="/img/information-button.png" alt="">
+                    </div>
+                    <div id="instructions"></div>
+
+                </div>
             </div>
-            <div id="instructions"></div>
 
+            <div class="mainSettings">
+                <img src="img/fullscreen.png" onclick="fullScreen()">
+            </div>
+
+            <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
         </div>
-    </div> -->
-
-    <canvas id="canvas" width="800" height="600" class="d-none"></canvas>
+    </div>
 
 </body>
 

@@ -13,7 +13,7 @@ class World {
     statusBarPoison = new StatusBarPoison();
     bubbles = [];
     timeForAttack = true;
-
+    electricHit = false;
 
 
 
@@ -42,21 +42,14 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+
         }, 125);
         // muss noch geändert werden damit der character nicht so schnell stirbt auf 200ms und this.attack jelly muss in eine andere funktion die alle 50 ms abgefragt wird 
 
         setInterval(() => {
             this.checkForBubbles();
+            this.checkForJellyCollision();
         }, 200)
-
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit(5);
-                    this.statusBar.setPercentage(this.character.energy);
-                }
-            })
-        }, 200);
     }
 
 
@@ -64,6 +57,7 @@ class World {
         this.isCollidingWithCoin();
         this.attackJelly('purple');
         this.attackJelly('yellow');
+        this.attackJelly('electric');
         this.attackPuffer();
         this.attackEndboss();
     }
@@ -140,10 +134,10 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        mo.drawFrameCharacter(this.ctx);
-        mo.drawFrameEndboss(this.ctx);
-        mo.drawFrameBarrier(this.ctx);
+        // mo.drawFrame(this.ctx);
+        // mo.drawFrameCharacter(this.ctx);
+        // mo.drawFrameEndboss(this.ctx);
+        // mo.drawFrameBarrier(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -187,6 +181,21 @@ class World {
             }
         })
     };
+
+
+    checkForJellyCollision() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy, index) && enemy.type != 'electric') {
+                this.character.hit(5);
+                this.statusBar.setPercentage(this.character.energy);
+                this.electricHit = false;
+            } else if (this.character.isColliding(enemy, index) && enemy.type == 'electric') {
+                this.character.hit(7);
+                this.statusBar.setPercentage(this.character.energy);
+                this.electricHit = true;
+            }
+        })
+    }
 
 
     attackJelly(fish) {

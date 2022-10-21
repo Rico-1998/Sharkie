@@ -2,7 +2,14 @@ class Character extends movableObject {
 
     y = 220;
     height = 150;
-    speed = 7;
+    width = 150
+    speed = 10;
+    offsets = {
+        x: 30,
+        moY: 65,
+        barrierBottom: 80,
+        barrierTop: 140
+    }
     // noch in movableObject einfügen damit es jedes object hat
 
     swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
@@ -12,12 +19,14 @@ class Character extends movableObject {
     hurtElectric = imagePathLoad('img/1.Sharkie/5.Hurt/2.Electric shock/', 3);
     dead = imagePathLoad('img/1.Sharkie/6.dead/1.Poisoned/', 12);
     slap = imagePathLoad('img/1.Sharkie/4.Attack/Fin slap/', 8);
+    keyboard;
     world;
     // walking_sound = new Audio('audio/walking.mp3');
 
     constructor(world) {
         super();
         this.world = world;
+        this.keyboard = world.keyboard;
         this.loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadAllImages();
         this.animate();
@@ -30,7 +39,7 @@ class Character extends movableObject {
         this.loadImages(this.attacking);
         this.loadImages(this.notMoving);
         this.loadImages(this.hurt);
-        // this.loadAllImages(this.hurtElectric);
+        this.loadImages(this.hurtElectric);
         this.loadImages(this.dead);
         this.loadImages(this.slap);
     }
@@ -43,9 +52,12 @@ class Character extends movableObject {
 
             if (this.isDead()) {
                 this.playAnimation(this.dead);
+                this.world.clearAllIntervalls();
             }
-            else if (this.isHurt()) {
+            else if (this.isHurt() && !this.world.electricHit) {
                 this.playAnimation(this.hurt);
+            } else if (this.isHurt() && this.world.electricHit) {
+                this.playAnimation(this.hurtElectric)
             } else {
                 this.playMovingAnimations();
             }
@@ -63,39 +75,41 @@ class Character extends movableObject {
         this.y += this.speed;
     }
 
+
+    collisonCheck(side) {
+        if (this.collidingBarrier(this.world.level.barrier[0]) != side && this.collidingBarrier(this.world.level.barrier[1]) != side && this.collidingBarrier(this.world.level.barrier[2]) != side && this.collidingBarrier(this.world.level.barrier[3]) != side && this.collidingBarrier(this.world.level.barrier[4]) != side) {
+            return true
+        }
+    }
+
+
     swimDirection() {
         let id = setInterval(() => {
-            // this.walking_sound.pause();
-            // if (!this.world.barrierCollision) {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                if (this.collidingBarrier(this.world.level.barrier[0]) != 'right') {
-                    console.log(this.world.level.barrier);
+
+            if (this.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                if (this.collisonCheck('right')) {
                     this.moveRight();
                     this.otherDirection = false;
-                    // this.walking_sound.play();
                 }
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                if (this.collidingBarrier(this.world.level.barrier[0]) != 'left') {
+            if (this.keyboard.LEFT && this.x > 0) {
+                if (this.collisonCheck('left')) {
                     this.moveLeft();
                     this.otherDirection = true;
-                    // this.walking_sound.play();
                 }
             }
 
-            if (this.world.keyboard.UP && this.y > -70) {
-                if (this.collidingBarrier(this.world.level.barrier[0]) != 'top') {
-                    this.swimmingUp();
+            if (this.keyboard.UP && this.y > -70) {
+                if (this.collisonCheck('top')) {
+                    this.moveUP();
                 }
             }
 
-            if (this.world.keyboard.DOWN && this.y < 400) {
-                if (this.collidingBarrier(this.world.level.barrier[0]) != 'bottom') {
-                    this.swimmingDown();
+            if (this.keyboard.DOWN && this.y < 300) {
+                if (this.collisonCheck('bottom')) {
+                    this.moveDown();
                 }
-                // if (this.collidingBarrier() != 'bottom') this.swimmingDown();
-                // obere zeile ist eine kurzschreibweise für einzeilige if abfragen
             }
 
             this.world.camera_x = -this.x + 50;
