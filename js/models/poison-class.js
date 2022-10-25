@@ -3,6 +3,9 @@ class Poison extends movableObject {
     width = 60;
     height = 60;
     collected = false;
+    offsets = {
+        bottom: 0
+    };
 
     IMAGES = [
         'img/4. Marcadores/Posiขn/Animada/1.png',
@@ -27,15 +30,14 @@ class Poison extends movableObject {
 
 
     animatePoison() {
-        let i = setInterval(() => {
+        stopableInterval(() => {
             this.playAnimation(this.IMAGES);
         }, 100);
-        allIntervalls.push(i);
     }
 
 
     goUp() {
-        setInterval(() => {
+        stopableInterval(() => {
             if (this.collected) {
                 this.y -= 30;
             }

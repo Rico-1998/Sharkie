@@ -13,10 +13,9 @@ class BackgroundObject extends movableObject {
 
 
     move() {
-        let i = setInterval(() => {
+        stopableInterval(() => {
             this.x -= 0.5;
         }, 100);
-        allIntervalls.push(i);
     }
 
 

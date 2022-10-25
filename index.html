@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="/img/icons8-animal-64.png" type="image/x-icon">
     <script defer src="./js/models/world.class.js"></script>
+    <script defer src="./templates.js"></script>
     <script defer src="./js/models/drawable-object.class.js"></script>
     <script defer src="./js/models/movable-object.class.js"></script>
     <script defer src="./js/models/character.class.js"></script>
@@ -17,8 +18,6 @@
     <script defer src="./js/models/light.class.js"></script>
     <script defer src="./js/models/barrier.class.js"></script>
     <script defer src="./js/models/status-bar.class.js"></script>
-    <script defer src="./js/models/status-bar-coins.class.js"></script>
-    <script defer src="./js/models/status-bar-poison.class.js"></script>
     <script defer src="./js/models/poison-class.js"></script>
     <script defer src="./js/models/coin.class.js"></script>
     <script defer src="./js/models/background-object.class.js"></script>
@@ -29,9 +28,16 @@
     <script defer src="./js/game.js"></script>
 </head>
 
-<body onload="">
+<body onload="setListener()">
+    <div class="msgContainer d-none">
+        <div class="instructionRotate">
+            <span>Please rotate your Phone</span>
+            <img src="img/phone.png">
+        </div>
+    </div>
 
-    <div>
+
+    <div class="mainContent" id="mainContent">
         <img src="./img/background2.jpg" class="background">
 
         <div class="mainContainer">
@@ -73,11 +79,15 @@
                 </div>
             </div>
 
-            <div class="mainSettings">
-                <img src="img/fullscreen.png" onclick="fullScreen()">
-            </div>
+            <div>
+                <div class="mainSettings">
+                    <img src="img/fullscreen.png" class="fullscreen" onclick="fullScreen()">
+                    <img src="img/mute.png" id="mute">
+                </div>
 
-            <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
+                <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
+                <div id="mobileInstructions"></div>
+            </div>
         </div>
     </div>
 

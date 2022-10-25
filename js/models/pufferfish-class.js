@@ -2,6 +2,11 @@ class Pufferfish extends movableObject {
 
     height = 60;
     width = 60;
+    offsets = {
+        x: 0,
+        y: 0,
+        bottom: 0
+    };
     type;
     playBlowupAnimation = true;
     fishShrinkAnimation = false;
@@ -35,25 +40,24 @@ class Pufferfish extends movableObject {
 
 
     playBuffAnimation() {
-        let i = setInterval(() => {
-        if (this.otherDirection) {
-            this.getSmall();
-        } else {
-            this.blowUp();
-        }
+        stopableInterval(() => {
+            if (this.otherDirection) {
+                this.getSmall();
+            } else {
+                this.blowUp();
+            }
         }, 250);
-        allIntervalls.push(i);
     }
 
-    
+
     blowUp() {
-        if(this.playBlowupAnimation) {
+        if (this.playBlowupAnimation) {
             this.timeOutForTransition();
             this.playBlowupAnimation = !this.playBlowupAnimation;
-            
-            let j = setInterval(() => {
+
+            let j = stopableInterval(() => {
                 this.playAnimation(this.bubbleSwimming);
-            }, 100);   
+            }, 100);
             this.timeForIntervalClear(j);
             this.fishShrinkAnimation = true;
         }
@@ -61,15 +65,15 @@ class Pufferfish extends movableObject {
 
 
     getSmall() {
-        if(this.fishShrinkAnimation) {
-        this.timeOutForTransition();
-        this.fishShrinkAnimation = false;
+        if (this.fishShrinkAnimation) {
+            this.timeOutForTransition();
+            this.fishShrinkAnimation = false;
 
-        let j = setInterval(() => {
-            this.playAnimation(this.swimming);
-        }, 100);   
-        this.timeForIntervalClear(j);
-        this.playBlowupAnimation = true;
+            let j = stopableInterval(() => {
+                this.playAnimation(this.swimming);
+            }, 100);
+            this.timeForIntervalClear(j);
+            this.playBlowupAnimation = true;
         }
     }
 
@@ -89,96 +93,35 @@ class Pufferfish extends movableObject {
     animatePufferfish() {
         this.movingDirection();
 
-        let j = setInterval(() => {
+        stopableInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.dead);
-                setInterval(() => {
+                stopableInterval(() => {
                     this.y -= 10;
                     this.x -= 10;
                 }, 1000 / 60)
             }
         }, 200);
-        allIntervalls.push(j);
     }
 
 
     movingDirection() {
-        let j = setInterval(() => {
+        stopableInterval(() => {
             if (!this.otherDirection) {
                 this.swimForward();
             } else {
                 this.swimBackward();
             };
         }, 100);
-        allIntervalls.push(j);
     }
 
 
     swimForward() {
-        // this.playAnimation(greenPufferFish.IMAGES_SWIMMING);
         this.x -= 4;
     }
 
 
     swimBackward() {
-        // this.playAnimation(greenPufferFish.IMAGES_SWIMMING);
         this.x += 4;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-        // // setTimeout(() => {
-        //     this.playBlowupAnimation = true;
-        //     //     this.fishShrinkAnimation = true;
-        //     // }, 100);
-        //     switch (true) {
-        //         case (this.playBlowupAnimation):
-        //             let i = setInterval(() => {
-        //                 this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
-        //             }, 300);
-        //             // setTimeout(() => {
-        //             //     clearInterval(i);
-        //             //     this.playBlowupAnimation = false;
-        //             // }, 500);
-        //             this.count++;
-    
-    
-        //             // setTimeout(() => {
-        //             //     let j = setInterval(() => {
-        //             //         this.playAnimation(greenPufferFish.IMAGES_BUBBLE_SWIMMING);
-        //             //     }, 1600);
-        //             //     this.intervals.push(j)
-        //             // }, 1200);
-        //             // setTimeout(() => {
-        //             //     clearInterval(this.intervals);
-        //             //     this.fishShrinkAnimation = true;
-        //             // }, 7000);
-    
-        //             break;
-    
-        //         case (this.fishShrinkAnimation):
-        //             // console.log('klappt');
-        //             break;
-    
-        //     }
-        //     // this.playBlowupAnimation = true;
-        //     // if (this.playBlowupAnimation) {
-        //     //     this.playAnimation(greenPufferFish.IMAGES_TRANSITION);
-        //     //     let i = setInterval(() => {
-        //     //         this.playAnimation(greenPufferFish.IMAGES_BUBBLE_SWIMMING);
-        //     //     }, 200);
-        //     //     this.playBlowupAnimation = false;
-        //     //     // setTimeout(() => {
-        //     //     //     clearInterval(i);
-        //     //     // }, 3500);
-        //     // }

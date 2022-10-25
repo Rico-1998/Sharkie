@@ -1,23 +1,27 @@
 class World {
-    // character = new Character();
-    // this ist das schlüsselwort für die aktuelle instanz was bedeutet wenn man this als parameter in eine klassse übergibt hat diese klassse zugriff alle methoden und eigenschaften 
+    gameStart = true;
     character;
     level;
     levelNr = 1;
     canvas;
+    mobile;
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
-    statusBarCoin = new StatusBarCoin();
-    statusBarPoison = new StatusBarPoison();
+    statusBar = new StatusBar('health', 0);
+    statusBarCoin = new StatusBar('coin', 40);
+    statusBarPoison = new StatusBar('poison', 80);
     bubbles = [];
     timeForAttack = true;
     electricHit = false;
+    woSounds = {
+        jellyHit: new Audio('audio/bubble-pop.mp3'),
+    };
 
 
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, startsong, mobile) {
+        this.mobile = mobile;
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
@@ -26,6 +30,7 @@ class World {
         this.draw();
         this.run();
         this.attackTime();
+        // startSong.play();
     }
 
 
@@ -38,23 +43,23 @@ class World {
     }
 
 
-
     run() {
-        setInterval(() => {
+        stopableInterval(() => {
             this.checkCollisions();
 
         }, 125);
         // muss noch geändert werden damit der character nicht so schnell stirbt auf 200ms und this.attack jelly muss in eine andere funktion die alle 50 ms abgefragt wird 
 
-        setInterval(() => {
+        stopableInterval(() => {
             this.checkForBubbles();
-            this.checkForJellyCollision();
+            this.checkEnemyCollisions();
         }, 200)
     }
 
 
     checkCollisions() {
         this.isCollidingWithCoin();
+        this.iscollidingWithPoison();
         this.attackJelly('purple');
         this.attackJelly('yellow');
         this.attackJelly('electric');
@@ -64,18 +69,18 @@ class World {
 
 
     checkForBubbles() {
-        if (this.statusBarCoin.percentage == 100) {
-            if (this.keyboard.D && this.timeForAttack) {
-                let bubble = new Bubble(this.character.x + 60, this.character.y + 80);
-                this.bubbles.push(bubble);
-                this.timeForAttack = false;
-            }
+        // if (this.statusBarCoin.percentage == 100) {
+        if (this.keyboard.D && this.timeForAttack) {
+            let bubble = new Bubble(this.character.x + 60, this.character.y + 80);
+            this.bubbles.push(bubble);
+            this.timeForAttack = false;
         }
+        // }
     }
 
 
     attackTime() {
-        setInterval(() => {
+        stopableInterval(() => {
             this.timeForAttack = true;
         }, 1000)
     }
@@ -113,7 +118,6 @@ class World {
 
     allStatusBars() {
         this.ctx.translate(-this.camera_x, 0); // Back
-        // space for fixed objects
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarPoison);
@@ -170,6 +174,10 @@ class World {
                 }, 70);
             }
         })
+    };
+
+
+    iscollidingWithPoison() {
         this.level.poison.forEach((poison, index) => { // die anzahl der coins und der index wird reingegeben
             if (this.character.isColliding(poison)) {
                 this.character.collectPoison();
@@ -180,33 +188,44 @@ class World {
                 }, 70);
             }
         })
-    };
+    }
 
 
-    checkForJellyCollision() {
+    checkEnemyCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy, index) && enemy.type != 'electric') {
-                this.character.hit(5);
-                this.statusBar.setPercentage(this.character.energy);
-                this.electricHit = false;
+                this.setDamage(2, false);
             } else if (this.character.isColliding(enemy, index) && enemy.type == 'electric') {
-                this.character.hit(7);
-                this.statusBar.setPercentage(this.character.energy);
-                this.electricHit = true;
+                this.setDamage(5, true);
             }
         })
+        this.endbossCollision();
+    }
+
+
+    endbossCollision() {
+        if (this.character.isColliding(this.level.endBoss[0])) {
+            this.setDamage(8, false);
+        }
+    }
+
+
+    setDamage(nr, boolean) {
+        this.character.hit(nr);
+        this.statusBar.setPercentage(this.character.energy);
+        this.electricHit = boolean;
     }
 
 
     attackJelly(fish) {
         this.bubbles.forEach((bubble, indexBubble) => {
             this.level.enemies.forEach((enemy, indexEnemy) => {
-                if (bubble.isCollidingBubble(enemy, indexEnemy) && this.level.enemies[indexEnemy].type === fish) {
+                if (bubble.isColliding(enemy, indexEnemy) && this.level.enemies[indexEnemy].type === fish) {
+                    this.woSounds.jellyHit.play();
+                    this.woSounds.jellyHit.volume = 0.1;
                     this.bubbles.splice(indexBubble, 1);
                     enemy.jellyfishDead();
-                    setTimeout(() => {
-                        this.level.enemies.splice(indexEnemy, 1);
-                    }, 2000);
+                    this.spliceOutofArray(this.level.enemies, indexEnemy, 2000);
                 }
             })
         })
@@ -214,14 +233,23 @@ class World {
 
 
     attackPuffer() {
+        // this.bubbles.forEach((bubble, indexBubble) => {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy, index) && this.level.enemies[index].type == 'greenPuffer' && this.keyboard.SPACE) {
-                enemy.jellyfishDead();
-                setTimeout(() => {
-                    this.level.enemies.splice(index, 1);
-                }, 2000);
+            if (this.level.enemies[index].type == 'greenPuffer') {
+                if (this.character.isCollidingPuffer(this.level.enemies[index]) && this.keyboard.SPACE && !this.character.isColliding(this.level.enemies[index])) {
+                    this.level.enemies[index].jellyfishDead();
+                }
             }
+            // else if (this.keyboard.D) {
+            //     this.bubbles.forEach((bubble, indexBubble) => {
+            //         if (bubble.isColliding(enemy)) {
+            //             this.bubbles.splice(indexBubble, 1);
+            //         }
+            //     })
+            // }
+
         })
+
     };
 
 
@@ -231,9 +259,17 @@ class World {
         this.bubbles.forEach((bubble, indexBubble) => {
             if (bubble.isColliding(boss) && this.statusBarPoison.percentage == 100) {
                 boss.hit(10);
-                this.bubbles.splice(indexBubble, 1);
+                this.spliceOutofArray(this.bubbles, indexBubble, 0)
+                // this.bubbles.splice(indexBubble, 1);
             }
         });
+    }
+
+
+    spliceOutofArray(array, i, time) {
+        setTimeout(() => {
+            array.splice(i, 1);
+        }, time);
     }
 
 

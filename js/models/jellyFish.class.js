@@ -3,6 +3,11 @@ class Jellyfish extends movableObject {
     y = 150;
     height = 60;
     width = 60;
+    offsets = {
+        x: 0,
+        y: 30,
+        bottom: -50
+    };
     otherDirection = false;
     type;
     yellowSwimming = imagePathLoad('img/2.Enemy/2 Jelly fish/Regular damage/Yellow ', 4);
@@ -60,23 +65,21 @@ class Jellyfish extends movableObject {
 
 
     animateJelly() {
-        let id = setInterval(() => {
+        stopableInterval(() => {
             this.swimDirection();
             this.setAnimation(this.purpleDead, 'purple', this.purpleSwimming);
             this.setAnimation(this.yellowDead, 'yellow', this.yellowSwimming);
             this.setAnimation(this.electricJellyDead, 'electric', this.electricJelly);
         }, 125)
-        allIntervalls.push(id)
     }
 
 
     setAnimation(pictures, colour, img) {
         if (this.isDead() && this.type === colour) {
             this.playAnimation(pictures);
-            let id = setInterval(() => {
+            stopableInterval(() => {
                 this.y -= 10;
             }, 1000 / 25)
-            allIntervalls.push(id)
         } else if (!this.isDead() && this.type === colour) {
             this.swim(img);
         }

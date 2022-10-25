@@ -9,12 +9,17 @@ class movableObject extends DrawableObject {
     actualPoisonBottle = 0;
     collectedCoins = 0;
     actualCoin = 0;
-
+    offsets = {
+        x: 0,
+        moY: 0,
+        barrierBottom: 0,
+        barrierTop: 0
+    }
 
 
 
     applyGravity() {
-        setInterval(() => {
+        stopableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -113,9 +118,9 @@ class movableObject extends DrawableObject {
     // character.isColliding(Jellyfish);
     isColliding(mo) {
         return this.x - this.offsets.x + this.width > mo.x &&
-            this.y + this.height > mo.y + this.offsets.x &&
+            this.y + this.height - this.offsets.x > mo.y &&
             this.x < mo.x + this.offsets.x &&
-            this.y + this.offsets.moY < mo.y + mo.height;
+            this.y + this.offsets.moY < mo.y + mo.height - mo.offsets.bottom;
     }
 
 
@@ -129,14 +134,20 @@ class movableObject extends DrawableObject {
         );
     }
 
-
-    isCollidingBubble(mo) {
-        return this.x + this.width > mo.x &&
-            this.x < mo.x &&
-
-            this.y + this.height > mo.y &&
-            this.y < mo.y + mo.height;
+    isCollidingPuffer(puffer) {
+        return this.x + this.width - puffer.x + puffer.width > 60 &&
+            this.y + this.height - puffer.y + puffer.height > 50 &&
+            this.y - puffer.y + puffer.height < 50
     }
+
+
+    // isCollidingBubble(mo) {
+    //     return this.x + this.width > mo.x &&
+    //         this.x < mo.x &&
+
+    //         this.y + this.height > mo.y &&
+    //         this.y < mo.y + mo.height;
+    // }
 
 
     moveRight() {
@@ -178,10 +189,9 @@ class movableObject extends DrawableObject {
     }
 
     reverse(time) {
-        let j = setInterval(() => {
+        stopableInterval(() => {
             this.otherDirection = !this.otherDirection;
         }, time);
-        allIntervalls.push(j);
     }
 
 

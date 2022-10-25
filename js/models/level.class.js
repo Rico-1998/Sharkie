@@ -48,19 +48,20 @@ class Level {
 
 
     loadBarriers() {
-        this.barrier.push(new Barrier('top', 350, -52, 200, 600));
-        this.barrier.push(new Barrier('rock', 1700, 300, 200, 300));
+        this.barrier.push(new Barrier('top', -100, -52, 200, 600));
+        this.barrier.push(new Barrier('rock', 1200, 300, 300, 300));
         this.barrier.push(new Barrier('top', 1500, -52, 200, 700));
         this.barrier.push(new Barrier('horizontal', 2300, 200, 300, 300));
-        this.barrier.push(new Barrier('bottom', 550, 350, 150, 600));
+        this.barrier.push(new Barrier('bottom', 150, 350, 150, 600));
     }
 
 
     loadCoinsandPoison(nr) {
-        let arrPosionPosition = [500, 650, 900, 1500, 2340];
-        for (let i = 0; i < nr * 5; i++) {
+        let coinPosition = [700, 800, 900, 1100, 1240];
+        let poisonPosition = [500, 650, 900, 1500, 2340];
+        for (let i = 0; i < nr * 10; i++) {
             this.coins.push(new Coin());
-            this.poison.push(new Poison(arrPosionPosition[i]));
+            this.poison.push(new Poison(poisonPosition[i]));
         }
     }
 

@@ -2,7 +2,10 @@ class Endboss extends movableObject {
     world;
     height = 400;
     width = 250;
-    y = 0;
+    y = -20;
+    offsets = {
+        bottom: 50,
+    };
     endBossDirection = false;
     firstContact = true;
     incoming = imagePathLoad('img/2.Enemy/3 Final Enemy/1.Introduce/', 10); // images for incoming
@@ -10,7 +13,7 @@ class Endboss extends movableObject {
     attacking = imagePathLoad('img/2.Enemy/3 Final Enemy/Attack/', 6);
     hurt = imagePathLoad('img/2.Enemy/3 Final Enemy/Hurt/', 4);
     dead = imagePathLoad('img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia ', 6);
-    attackAnimation;
+    counter = 0;
 
 
 
@@ -19,8 +22,8 @@ class Endboss extends movableObject {
         this.world = world;
         this.loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
         this.reverse();
+        this.x = -800;
         this.loadAllImages();
-        this.x = 4500;
         this.animate();
         this.timeForSwimming();
         this.attack();
@@ -37,13 +40,13 @@ class Endboss extends movableObject {
 
     // allintervalls.push({class: 'endboss', fn:'animate' , id: alles was in der setintervall funktion ist})
     animate() {
-        allIntervalls.push(setInterval(() => {
-            if (this.world.character.x > 2800 && this.firstContact) {
+        stopableInterval(() => {
+            if (this.world.character.x > 2500 && this.firstContact && this.counter < 8) {
                 this.playAnimation(this.incoming);
-                this.x = 3000
+                this.x = 3000;
+                this.counter++
                 setTimeout(() => {
                     this.firstContact = false;
-                    this.attackAnimation = true;
                 }, 300);
             } else if (this.isHurt()) {
                 this.playAnimation(this.hurt);
@@ -56,14 +59,20 @@ class Endboss extends movableObject {
             } else {
                 this.attack();
             }
-        }, 100));
+        }, 100);
 
     }
 
 
     attack() {
-        if (this.distance() < 500 && !this.firstContact && this.attackAnimation) {
+        if (this.distance() < 500 && !this.firstContact) {
             this.playAnimation(this.attacking);
+            // if (this.x > 2300) {
+            //     this.x -= 5;
+            // } else {
+            //     this.x += 5;
+            // }
+            // this.y += 4
         } else {
             this.playAnimation(this.swimming);
         }
@@ -76,10 +85,9 @@ class Endboss extends movableObject {
 
 
     timeForSwimming() {
-        let i = setInterval(() => {
+        stopableInterval(() => {
             this.swimDirection();
         }, 200)
-        allIntervalls.push(i);
     }
 
 
@@ -93,9 +101,8 @@ class Endboss extends movableObject {
 
 
     reverse() {
-        let i = setInterval(() => {
+        stopableInterval(() => {
             this.endBossDirection = !this.endBossDirection;
         }, 5000)
-        allIntervalls.push(i);
     }
 }

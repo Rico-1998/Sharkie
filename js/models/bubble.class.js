@@ -19,15 +19,13 @@ class Bubble extends movableObject {
         this.speedY = 0;
         // this.applyGravity();
         if (!world.character.otherDirection) {
-            let j = setInterval(() => {
+            stopableInterval(() => {
                 this.x += 7;
             }, 25);
-            allIntervalls.push(j);
         } else if (world.character.otherDirection) {
-            let j = setInterval(() => {
+            stopableInterval(() => {
                 this.x -= 7;
             }, 25);
-            allIntervalls.push(j);
         }
 
     }

@@ -9,8 +9,13 @@ class Character extends movableObject {
         moY: 65,
         barrierBottom: 80,
         barrierTop: 140
-    }
-    // noch in movableObject einfügen damit es jedes object hat
+    };
+
+    chSounds = {
+        swimSound: new Audio('audio/swim.mp3'),
+        soundWhileShoot: new Audio('audio/whileShoot.mp3'),
+        hitSound: new Audio('audio/hurt.mp3')
+    };
 
     swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
     attacking = imagePathLoad('img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/', 8);
@@ -21,6 +26,8 @@ class Character extends movableObject {
     slap = imagePathLoad('img/1.Sharkie/4.Attack/Fin slap/', 8);
     keyboard;
     world;
+    timeForAttack = 0;
+
     // walking_sound = new Audio('audio/walking.mp3');
 
     constructor(world) {
@@ -31,7 +38,6 @@ class Character extends movableObject {
         this.loadAllImages();
         this.animate();
     }
-
 
 
     loadAllImages() {
@@ -48,7 +54,7 @@ class Character extends movableObject {
     animate() {
         this.swimDirection();
 
-        let id = setInterval(() => {
+        stopableInterval(() => {
 
             if (this.isDead()) {
                 this.playAnimation(this.dead);
@@ -56,13 +62,13 @@ class Character extends movableObject {
             }
             else if (this.isHurt() && !this.world.electricHit) {
                 this.playAnimation(this.hurt);
+                // this.chSounds.hitSound.play();
             } else if (this.isHurt() && this.world.electricHit) {
                 this.playAnimation(this.hurtElectric)
             } else {
                 this.playMovingAnimations();
             }
         }, 200)
-        allIntervalls.push(id);
     }
 
 
@@ -84,7 +90,7 @@ class Character extends movableObject {
 
 
     swimDirection() {
-        let id = setInterval(() => {
+        stopableInterval(() => {
 
             if (this.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 if (this.collisonCheck('right')) {
@@ -93,7 +99,7 @@ class Character extends movableObject {
                 }
             }
 
-            if (this.keyboard.LEFT && this.x > 0) {
+            if (this.keyboard.LEFT && this.x > -500) {
                 if (this.collisonCheck('left')) {
                     this.moveLeft();
                     this.otherDirection = true;
@@ -113,7 +119,6 @@ class Character extends movableObject {
             }
 
             this.world.camera_x = -this.x + 50;
-            allIntervalls.push(id)
             // }
         }, 1000 / 60)
 
@@ -122,20 +127,25 @@ class Character extends movableObject {
 
     playMovingAnimations() {
         //Walk Animation
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.playAnimation(this.swimming);
-        }
-
-        if (this.world.keyboard.UP || this.world.keyboard.DOWN) {
-            this.playAnimation(this.swimming);
+            this.chSounds.swimSound.play();
+        } else {
+            this.chSounds.swimSound.pause();
         }
 
         if (!this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
             this.playAnimation(this.notMoving);
         }
 
-        if (this.world.keyboard.D) {
+        if (this.world.keyboard.D && this.timeForAttack < 8) {
             this.playAnimation(this.attacking);
+            this.timeForAttack++;
+            this.chSounds.soundWhileShoot.play();
+        } else {
+            this.timeForAttack = 0;
+            this.chSounds.soundWhileShoot.pause();
+            this.chSounds.soundWhileShoot.load();
         }
 
         if (this.world.keyboard.SPACE) {
