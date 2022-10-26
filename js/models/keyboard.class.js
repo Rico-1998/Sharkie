@@ -13,7 +13,9 @@ class Keyboard {
         this.keysForTouch();
     }
 
-
+    /**
+     * keycodes for moving on mobile Devices
+     */
     keysForMOving() {
         window.addEventListener("keydown", (e) => {
 
@@ -72,77 +74,82 @@ class Keyboard {
     }
 
 
-
+    /**
+     * keys for moving on pcs
+     */
     keysForTouch() {
-        if (this.mobile) {
-            document.getElementById('left').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.LEFT = true;
-            });
+        setTimeout(() => {
 
-            document.getElementById('left').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.LEFT = false;
-            });
+            if (this.mobile) {
+                document.getElementById('left').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.LEFT = true;
+                });
 
-            document.getElementById('right').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.RIGHT = true;
-            });
+                document.getElementById('left').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.LEFT = false;
+                });
 
-
-            document.getElementById('right').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.RIGHT = false;
-            });
+                document.getElementById('right').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.RIGHT = true;
+                });
 
 
-            document.getElementById('up').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.UP = true;
-            });
+                document.getElementById('right').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.RIGHT = false;
+                });
 
 
-            document.getElementById('up').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.UP = false;
-            });
+                document.getElementById('up').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.UP = true;
+                });
 
 
-            document.getElementById('down').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.DOWN = true;
-            });
+                document.getElementById('up').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.UP = false;
+                });
 
 
-            document.getElementById('down').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.DOWN = false;
-            });
+                document.getElementById('down').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.DOWN = true;
+                });
 
 
-            document.getElementById('space').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.SPACE = true;
-            });
+                document.getElementById('down').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.DOWN = false;
+                });
 
 
-            document.getElementById('space').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.SPACE = false;
-            });
+                document.getElementById('space').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.SPACE = true;
+                });
 
 
-            document.getElementById('bubble').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.D = true;
-            });
+                document.getElementById('space').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.SPACE = false;
+                });
 
 
-            document.getElementById('bubble').addEventListener('touchend', (event) => {
-                event.preventDefault();
-                this.D = false;
-            });
-        }
+                document.getElementById('bubble').addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.D = true;
+                });
+
+
+                document.getElementById('bubble').addEventListener('touchend', (event) => {
+                    event.preventDefault();
+                    this.D = false;
+                });
+            }
+        }, 2000)
     }
 }

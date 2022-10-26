@@ -20,9 +20,19 @@ body {
     overflow: hidden;
 }
 
+.flex {
+    display: flex;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .msgContainer {
     position: absolute;
-    z-index: 9999;
+    z-index: 980;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -42,13 +52,13 @@ body {
 }
 
 .background {
-    height: 101vh;
+    height: 102vh;
     width: 100%;
 }
 
 .mainContainer {
     position: absolute;
-    z-index: 999;
+    z-index: 900;
     top: 0;
     left: 0;
     display: flex;
@@ -59,17 +69,15 @@ body {
 }
 
 .headline {
-    display: flex;
-    justify-content: center;
     font-size: 28px;
     font-family: 'evilEmpire', Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
-    height: 135px;
+    padding-top: 10px;
 }
 
 .startScreen {
     width: 100%;
-    height: 100%;
+    height: 103%;
     background-image: url('img/3. Background/Legacy/Dark/1.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -159,6 +167,10 @@ body {
     }
 }
 
+.marginUnset {
+    margin: unset;
+}
+
 .sharkie {
     height: 125px;
     rotate: 45deg;
@@ -212,10 +224,19 @@ body {
     align-items: center;
 }
 
+.howToPlay {
+    display: flex;
+    justify-content: space-between;
+}
+
+.howToPlay h1 {
+    padding-left: 45px;
+}
+
 .closingBox {
     display: flex;
     height: 90%;
-    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .closingBox img {
@@ -318,14 +339,16 @@ table tbody tr {
 .taskImg {
     width: 50px;
     height: 50px;
-    padding-top: 25px;
-    padding-bottom: 25px;
 }
 
 .taskGif {
-    width: 250px;
+    width: 200px;
     height: 190px;
     padding: 10px 10px 10px 0px;
+}
+
+.setWidth {
+    width: 94%;
 }
 
 .gifDiv {
@@ -353,7 +376,9 @@ table tbody tr {
     border: 4px solid rgb(156, 7, 242);
     padding-inline: 50px;
     background-color: rgb(181, 151, 198);
-    width: 80%;
+    width: 84%;
+    font-size: 18px;
+    text-align: center;
 }
 
 .content {
@@ -438,13 +463,32 @@ canvas {
 }
 
 .mainSettings {
-    width: 75px;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    right: 300px;
-    top: 130px;
+}
+
+.mainSettings img {
     filter: invert(1);
+}
+
+.mainSettings :nth-child(2) {
+    display: flex;
+    align-items: center;
+}
+
+.headerGame {
+    background: red;
+    background: -webkit-linear-gradient(left, orange, yellow, green, cyan, blue, violet);
+    background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+    background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+    background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 30px;
+}
+
+.headerGame h2:hover {
+    cursor: pointer;
 }
 
 .mainSettings img {
@@ -456,6 +500,85 @@ canvas {
     display: none;
 }
 
+.slide-fwd-center {
+    animation: slide-fwd-center .6s cubic-bezier(.25, .46, .45, .94) both
+}
+
+@keyframes slide-fwd-center {
+    0% {
+        transform: translateZ(0)
+    }
+
+    100% {
+        transform: translateZ(160px)
+    }
+}
+
+.gameOverSection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    justify-content: space-evenly;
+    align-items: end;
+}
+
+.gameOverContainer {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.gameOverContainer h1 {
+    font-size: 40px;
+    text-decoration: underline;
+    color: rgb(157, 0, 255);
+    font-family: 'evilEmpire', Arial, Helvetica, sans-serif;
+    letter-spacing: 2px;
+}
+
+.gameoverBtns {
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.restart {
+    height: 80px;
+    background-image: url(img/restart.jpeg);
+    background-repeat: no-repeat;
+    width: 200px;
+    background-size: contain;
+    border-radius: 15px;
+    font-size: 26px;
+    color: white;
+}
+
+.restart:hover,
+.exit:hover {
+    cursor: pointer;
+    transition: transform 225ms ease-in-out;
+    transform: scale(1.3);
+}
+
+.exit {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    background: rgb(160, 10, 250);
+    background: radial-gradient(circle, rgba(160, 10, 250, 1) 0%, rgba(254, 0, 11, 0.6741290266106443) 100%);
+    font-size: 26px;
+    color: white;
+}
+
 @media only screen and (max-width:900px) and (max-height:450px) and (orientation: landScape) {
     body {
         overflow: hidden;
@@ -463,6 +586,23 @@ canvas {
 
     .background {
         height: 100vh;
+    }
+
+    .playSection {
+        height: unset;
+        top: 5px;
+    }
+
+    .tasks {
+        padding-top: 30px;
+    }
+
+    .task {
+        padding-top: 30px;
+    }
+
+    .content {
+        height: 400px;
     }
 
     .startContainer {
@@ -476,8 +616,7 @@ canvas {
     }
 
     .glow-on-hover {
-        margin-top: unset;
-        margin-bottom: 75px;
+        margin: unset;
     }
 
     .sharkie {
@@ -490,15 +629,16 @@ canvas {
         margin: unset;
     }
 
-
-    .mainSettings {
-        top: 50px;
-        right: 70px;
-        width: 75px;
+    .headerGame {
+        font-size: 20px;
     }
 
     .fullscreen {
         display: none;
+    }
+
+    .gameOverContainer {
+        margin-bottom: 20px;
     }
 
 }

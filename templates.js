@@ -1,13 +1,21 @@
+/**
+ * 
+ * @returns Html Part with Instructions for playing The Game
+ */
+
+
 function createHowToPlaySection() {
     return /*html*/ `
         <div class="playSection">
-            <div class="closingBox">
-                <img src="img/secondary-plus.svg" onclick="closeHowToPlaySection()">
-            </div>
-
+            
             <div class="content ">
-                <div class="header">
+                <div class="howToPlay">
+                    <div></div>
                     <h1>How to Play</h1>
+                    
+                    <div class="closingBox">
+                        <img src="img/secondary-plus.svg" onclick="closeHowToPlaySection()">
+                    </div>
                 </div>
 
                 <div class="movingInstructions">
@@ -102,7 +110,7 @@ function createHowToPlaySection() {
                     </div>
 
                     <div class="task">
-                        <div class="gifDiv">
+                        <div class="gifDiv setWidth">
                             <span class="description">Kill the Jellys with Bubbles to avoid Damage</span>
                             <img class="taskGif" src="img/2.Enemy/2 Jelly fish/Preview swim-dead.gif">
                         </div>
@@ -124,14 +132,36 @@ function createHowToPlaySection() {
 
                     <div class="enemyContainer">
 
-                    <div class="header"><h2>Enemies</h2></div>
+                    <div class="header column">
+                        <h2>Enemies</h2>
 
                             <div class="enemyBox">
-                                <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png">
-                                <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png">
-                                <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png">
-                                <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Pink 1.png">
-                                <img class="taskImg" src="img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png">
+                                <div class="column">
+                                    <span>Purple Jelly</span>
+                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png">
+                                </div>
+                                
+                                <div class="column">
+                                    <span>Yellow Jelly</span>
+                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png">
+                                </div>
+
+                                <div class="column">
+                                    <span>Electric Jelly</span>
+                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png">
+                                </div>
+
+
+                                <div class="column">
+                                    <span>Electric Jelly</span>
+                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Pink 1.png">
+                                </div>
+
+                                <div class="column">
+                                    <span>Pufferfish</span>
+                                    <img class="taskImg" src="img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png">
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -139,4 +169,25 @@ function createHowToPlaySection() {
             </div>
         </div>
     `
+}
+
+
+/**
+ * 
+ * @returns Html Part with Moving Keys for Mobile Devices
+ */
+function createMobileSection() {
+    return /*html*/ `
+        <div class="movingKeys">
+            <button id="left" class="btn"><img class="left" src="img/right-arrow.png"></button>
+            <button id="right" class="btn"><img class="right" src="img/right-arrow.png"></button>
+            <button id="up" class="btn"><img class="up" src="img/right-arrow.png"></button>
+            <button id="down" class="btn"><img class="down" src="img/right-arrow.png"></button>
+        </div>    
+
+        <div class="attackKeys">
+            <button id="space" class="btn"><img class="space" src="img/space.png"></button>
+            <button id="bubble" class="btn"><img class="bubble" src="img/1.Sharkie/4.Attack/Bubble trap/Bubble.png"></button>
+        </div>
+        `
 }

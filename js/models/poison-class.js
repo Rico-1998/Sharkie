@@ -4,7 +4,10 @@ class Poison extends movableObject {
     height = 60;
     collected = false;
     offsets = {
-        bottom: 0
+        right: 0,
+        left: 0,
+        top: 0,
+        bottom: 0,
     };
 
     IMAGES = [
@@ -18,17 +21,20 @@ class Poison extends movableObject {
         'img/4. Marcadores/Posiขn/Animada/8.png'
     ]
 
-    constructor(x) {
+    constructor(x, y) {
         super();
         this.loadImage(this.IMAGES[0])
         this.loadImages(this.IMAGES);
         this.x = x;
-        this.y = 40 + Math.random() * 300;
+        this.y = y;
         this.animatePoison();
         this.goUp();
     }
 
 
+    /**
+     * setting the Animation for The poison Bottles
+     */
     animatePoison() {
         stopableInterval(() => {
             this.playAnimation(this.IMAGES);
@@ -36,6 +42,9 @@ class Poison extends movableObject {
     }
 
 
+    /**
+     * if a bottle was collected this function is for animating the Bottle to go up
+     */
     goUp() {
         stopableInterval(() => {
             if (this.collected) {

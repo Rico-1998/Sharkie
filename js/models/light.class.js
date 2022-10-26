@@ -20,6 +20,9 @@ class Light extends movableObject {
         this.animate();
     }
 
+    /**
+     * moving th Background Light Images
+     */
     animate() {
         stopableInterval(() => {
             this.moveLeft();

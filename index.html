@@ -29,6 +29,8 @@
 </head>
 
 <body onload="setListener()">
+
+    <!-- Message for Mobile Phones -->
     <div class="msgContainer d-none">
         <div class="instructionRotate">
             <span>Please rotate your Phone</span>
@@ -38,8 +40,10 @@
 
 
     <div class="mainContent" id="mainContent">
+        <!-- Background Image -->
         <img src="./img/background2.jpg" class="background">
 
+        <!-- Header -->
         <div class="mainContainer">
             <div class="startScreen" id="startscreen">
                 <div class="headline">
@@ -65,28 +69,47 @@
                     </svg>
                 </div>
 
+
+                <!-- How to Play Section -->
                 <div class="startContainer">
 
                     <button onclick="showGame()" class="glow-on-hover" type="button">Start</button>
 
                     <div class="info">
-                        <img class="settings" src="/img/settings.png" alt="">
-                        <img class="sharkie" src="./img/sharkie-celebrating.png">
-                        <img class="information" onclick="openHowToPlay()" src="/img/information-button.png" alt="">
+                        <img class="sharkie" src="img/sharkie-celebrating.png">
+                        <img class="information" onclick="openHowToPlay()" src="img/information-button.png" alt="">
                     </div>
                     <div id="instructions"></div>
 
                 </div>
             </div>
 
+            <!-- Canvas and Buttons for mobile Phones -->
             <div>
                 <div class="mainSettings">
-                    <img src="img/fullscreen.png" class="fullscreen" onclick="fullScreen()">
-                    <img src="img/mute.png" id="mute">
+                    <div class="headerGame">
+                        <h2 onclick="exit()">Sharkie</h2>
+                    </div>
+
+                    <div class="audio">
+                        <img src="img/fullscreen.png" class="fullscreen" onclick="fullScreen()">
+                        <img src="img/mute.png" id="mute">
+                    </div>
                 </div>
 
                 <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
                 <div id="mobileInstructions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Overscreen -->
+    <div class="gameOverSection d-none" id="gameover">
+        <div class="gameOverContainer" id="gameOverContainer">
+            <h1 class="d-none" id="win">Congratulation You Win !</h1>
+            <div class="gameoverBtns">
+                <button class="glow-on-hover marginUnset" onclick="restart()"> Restart</button>
+                <button class="exit" onclick="exit()">X</button>
             </div>
         </div>
     </div>
@@ -98,3 +121,4 @@
 
 <!-- <a href="https://de.freepik.com/fotos-kostenlos/blaues-und-transparentes-wasser-des-mittelmeers-sonnenlicht-mehrere-blasen_19615196.htm#query=wasser&position=19&from_view=keyword">Bild von frimufilms</a> auf Freepik -->
 <!-- <a href="https://www.flaticon.com/de/kostenlose-icons/rahmen" title="rahmen Icons">Rahmen Icons erstellt von Freepik - Flaticon</a> -->
+<!-- <a href="https://www.freepik.com/free-vector/game-with-glitch-effect_7997336.htm#query=game%20over&position=2&from_view=keyword">Image by dgim-studio</a> on Freepik -->

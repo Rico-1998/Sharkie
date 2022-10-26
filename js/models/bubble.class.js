@@ -1,7 +1,12 @@
 class Bubble extends movableObject {
     speedX = 20;
     bubble = 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
-
+    offsets = {
+        right: 0,
+        left: 0,
+        top: 0,
+        bottom: 0,
+    };
 
     constructor(x, y) {
         super()
@@ -14,7 +19,9 @@ class Bubble extends movableObject {
         this.changeBubble();
     }
 
-
+    /**
+     * animation for a shooted Bubble
+     */
     throwBubble() {
         this.speedY = 0;
         // this.applyGravity();
@@ -30,6 +37,10 @@ class Bubble extends movableObject {
 
     }
 
+
+    /**
+     * this function is for changing into poisoned Bubble if enough coins where collected
+     */
     changeBubble() {
         if (world.statusBarPoison.percentage == 100) {
             this.bubble = 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png';

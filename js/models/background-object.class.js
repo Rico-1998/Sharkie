@@ -8,15 +8,5 @@ class BackgroundObject extends movableObject {
         super().loadImage(imagePath);
         this.x = x;
         this.y = 480 - this.height;
-        // this.move();
     }
-
-
-    move() {
-        stopableInterval(() => {
-            this.x -= 0.5;
-        }, 100);
-    }
-
-
 }
