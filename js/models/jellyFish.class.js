@@ -33,7 +33,7 @@ class Jellyfish extends movableObject {
         this.loadImage('img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png');
         this.loadAllImages();
         this.x = x;
-        this.speed = 0.5 + Math.random();
+        this.speed = 1.0 + Math.random();
         this.animateJelly();
     }
 
@@ -88,7 +88,7 @@ class Jellyfish extends movableObject {
             this.setAnimation(this.yellowDead, 'yellow', this.yellowSwimming);
             this.setAnimation(this.electricJellyDead, 'electric', this.electricJelly);
             this.setAnimation(this.electricJellyPinkDead, 'electricPink', this.electricJellyPink);
-        }, 125)
+        }, 115)
     }
 
 

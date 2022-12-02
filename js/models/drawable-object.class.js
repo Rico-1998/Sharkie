@@ -1,10 +1,8 @@
 class DrawableObject {
     img;
-    // img= undefined;
     imageCache = {};
     currentImage = 0;
     x = -350;
-    // x = 2500;
     y = 280;
     height = 150;
     width = 100;

@@ -111,32 +111,16 @@ class movableObject extends DrawableObject {
      */
     collidingBarrier(collidingObj) {
         if (this.isColliding(collidingObj)) {
-            // Calculate the distance between centers
             const diffX = this.centerX() - (collidingObj.centerX());
             const diffY = this.centerY() - (collidingObj.centerY());
-            // Calculate the minimum distance to separate along X and Y
-            let minDistX = (this.width / 2) + (collidingObj.width / 2),
-                minDistY = (this.height / 4) + (collidingObj.height / 2);
-            // Calculate the depth of collision for both the X and Y axis
+            let minDistX = (this.width / 2) + (collidingObj.width / 2)
+            let minDistY = (this.height / 4) + (collidingObj.height / 2);
             let depthX = diffX > 0 ? minDistX - diffX : -minDistX - diffX,
                 depthY = diffY > 0 ? minDistY - diffY : -minDistY - diffY;
-
-            // if(diffX > 0) {
-            //     depthX =  minDistX - diffX;
-            // } else {
-            //     depthX = -minDistX - diffX;
-            // } zeile 210-214 ist das gleiche wie in zeile 208; (ternary operator so heisst diese schreibweise)
-            // so eine schreibweise nur für sehr einfache if abfragen die nur maximal 2 möglichkeiten zulassen bsp. boolean und für variablen zuweisung
-            // ? bedeutet then und also wenn die if bedingung true ist dann soll er was machen und : bedeutet else
-
-
-            // having the depth, pick the smaller depth and move along that axis
             if (depthX != 0 && depthY != 0) {
-                // Collision along the X-axis...
                 if (Math.abs(depthX) < Math.abs(depthY)) {
                     if (depthX > 0) return 'left';
                     return 'right';
-                    // Collision along the Y-axis...    
                 } else {
                     if (depthY > 0) return 'top';
                     return 'bottom';
@@ -197,11 +181,20 @@ class movableObject extends DrawableObject {
      */
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 7 % 6; => 1, Rest 1 
-        // i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 
         let path = images[i];
         this.img = this.imageCache[path]; // die variable img aus der movable object klasse entspricht dem bild-pfad aus dem json images walking;
         this.currentImage++;
+    }
 
+
+    playAnimationOneTime(images) {
+        let i = this.currentImage; // let i = 7 % 6; => 1, Rest 1 
+        let path = images[i];
+        this.img = this.imageCache[path]; // die variable img aus der movable object klasse entspricht dem bild-pfad aus dem json images walking;
+        this.currentImage++;
+        if (this.currentImage > images.length - 1) {
+            this.path = images.length - 1
+        }
     }
 
 

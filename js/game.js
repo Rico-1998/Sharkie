@@ -6,11 +6,12 @@ let mobile = /Mobi/.test(navigator.userAgent);
 let keyboard;
 const CANVAS_WIDTH = 800;
 let sounds = {
-    startSong: new Audio('audio/1-20 Touka City.mp3'),
+    startSong: new Audio('audio/background.mp3'),
     swimSound: new Audio('audio/swim.mp3'),
     collectCoin: new Audio('audio/coin.mp3'),
     soundWhileShoot: new Audio('audio/whileShoot.mp3'),
     jellyHit: new Audio('audio/bubble-pop.mp3'),
+    electricHit: new Audio('audio/zap.mp3'),
     hitSound: new Audio('audio/hurt.mp3'),
     slap: new Audio('audio/slap.mp3'),
     collectPoison: new Audio('audio/poison.mp3'),
@@ -19,6 +20,12 @@ let sounds = {
 }
 let soundOn = true;
 let gameEnd = false;
+let winningGame = false;
+
+
+function getId(id) {
+    return document.getElementById(id)
+}
 
 
 /**
@@ -26,11 +33,11 @@ let gameEnd = false;
  */
 function init() {
     checkForMobile();
-    canvas = document.getElementById('canvas');
+    canvas = getId('canvas');
     keyboard = new Keyboard(moveMobile);
     world = new World(canvas, keyboard);
-    document.getElementById('canvas').classList.remove('d-none');
-    console.log('my character is', world.character);
+    getId('canvas').classList.remove('d-none');
+    setAllVolumes();
 }
 
 
@@ -53,9 +60,9 @@ function checkForMobile() {
     // && screen.availHeight > screen.availWidth && window.matchMedia('(max-width:900px)') && window.matchMedia('(max-height:450px)')
     if (mobile) {
         moveMobile = true;
-        document.getElementById('mobileInstructions').classList.add('mobileInstructions');
-        document.getElementById('mobileInstructions').innerHTML = '';
-        document.getElementById('mobileInstructions').innerHTML += createMobileSection();
+        getId('mobileInstructions').classList.add('mobileInstructions');
+        getId('mobileInstructions').innerHTML = '';
+        getId('mobileInstructions').innerHTML += createMobileSection();
     }
 }
 
@@ -71,31 +78,18 @@ function stopableInterval(fn, time) {
 
 
 /**
- * This function sets 2 Eventlisteners for the Mute Button
- * first For Normal Pcs
- * Second for Mobile Devices
- */
-function setListener() {
-    document.getElementById('mute').addEventListener('mouseup', (e) => {
-        e.preventDefault();
-        switchSound();
-    });
-    document.getElementById('mute').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        switchSound();
-    });
-}
-
-/**
  * 
  * @param {sound which volume has to be lower} song 
  */
 function setVolume(song) {
     song.volume = 0.1;
-    song.loop = true;
+    // song.loop = true;
 }
 
 
+/**
+ * setting all volumes
+ */
 function setAllVolumes() {
     setVolume(sounds.collectCoin);
     setVolume(sounds.collectPoison);
@@ -104,6 +98,7 @@ function setAllVolumes() {
     setVolume(sounds.slap);
     setVolume(sounds.soundWhileShoot);
     setVolume(sounds.jellyHit);
+    setVolume(sounds.electricHit);
     setVolume(sounds.swimSound);
     setVolume(sounds.bossMusic);
     setVolume(sounds.bossHit);
@@ -116,11 +111,9 @@ function setAllVolumes() {
 function switchSound() {
     soundOn = !soundOn;
     if (soundOn) {
-        sounds.startSong.play();
-        document.getElementById('mute').src = 'img/volume.png'
+        getId('mute').src = 'img/volume.png'
     } else {
-        document.getElementById('mute').src = 'img/mute.png'
-        sounds.startSong.pause();
+        getId('mute').src = 'img/mute.png'
     }
 
 }
@@ -129,33 +122,77 @@ function switchSound() {
  * This function is for hiding the Startscreen
  */
 function showGame() {
-    document.getElementById('startscreen').classList.add('d-none');
-    document.getElementById('canvas').classList.remove('d-none');
+    getId('startscreen').classList.add('fade-out-bck');
+    setTimeout(() => {
+        getId('startscreen').classList.add('d-none');
+    }, 1600)
+    getId('canvas').classList.remove('d-none');
     init();
 }
 
 
 /**
- * This function shows the How To Play Section
+ * This function shows the settingBox
  */
-function openHowToPlay() {
-    document.getElementById('instructions').classList.remove('d-none');
-    document.getElementById('instructions').innerHTML = '';
-    document.getElementById('instructions').innerHTML += createHowToPlaySection();
+function openSettingsBox() {
+    getId('settingImg').classList.add('d-none');
+    getId('instructions').classList.remove('d-none');
+    getId('instructions').innerHTML = '';
+    getId('instructions').innerHTML += settingsBox();
 }
 
 /**
- * Closing How To Play Section
+ * Closing settingSection
  */
-function closeHowToPlaySection() {
-    document.getElementById('instructions').classList.add('d-none');
+function closeSettingsBox() {
+    getId('instructions').classList.add('d-none');
+    getId('settingImg').classList.remove('d-none');
+}
+
+
+/**
+ * showing gameInstructions
+ */
+function gameInstructios() {
+    getId('instructions').classList.add('d-none');
+    getId('settingImg').classList.add('d-none');
+    getId('gameInstructions').innerHTML = '';
+    getId('gameInstructions').innerHTML += createGameInstructions();
+}
+
+/**
+ * function that displays the instructions for the game target
+ */
+function gameTarget() {
+    getId('playInstructions').innerHTML = '';
+    getId('playInstructions').innerHTML = createGameTarget();
+    document.querySelector('.box').classList.add('d-none');
+}
+
+/**
+ * goin back to Instructions
+ */
+function backToInstructions() {
+    getId('playInstructions').innerHTML = '';
+    getId('gameInstructions').innerHTML = '';
+    getId('gameInstructions').innerHTML += createGameInstructions();
+}
+
+
+/**
+ * closing the completely instructionBox
+ */
+function closeInstructions() {
+    getId('settingImg').classList.remove('d-none');
+    getId('playInstructions').classList.add('d-none');
+    document.querySelector('.box').classList.add('d-none');
 }
 
 /**
  * Shows Fullscreen
  */
 function fullScreen() {
-    let fullScreen = document.getElementById('canvas');
+    let fullScreen = getId('canvas');
     showfullScreen(fullScreen);
 }
 
@@ -195,16 +232,10 @@ function exitFullscreen() {
  * @returns 
  */
 function imagePathLoad(path, count, extention = '.png') {
-    // es wir zu allererst ein aray erzeugt
     let imgArr = [];
-    // in der for schleife gemacht die bei 1 anfängt weil die bildpfade (1.png zum bsp) immer bei 1 anfangen.
-    // i <= count weil in den parametern der funktion die länge der zu ladenden bilder mit reingegeben wird.
-    // anschliessend wird in das arr der bild pfad(img/1.Sharkie/3.Swim/ zum bsp reingegben und der bildpfad ist immer bis zum letzten / vor dem 1.png oder svg etc)
-    // und die extension wäre dann zum bsp der dateiname (.png, .jpg oder svg usw)
     for (let i = 1; i <= count; i++) {
         imgArr.push(path + i + extention);
     }
-    // zum schluss wird einfach das arr welches jetzt die bildpfade enthält zurück gegeben.
     return imgArr;
 }
 
@@ -215,11 +246,13 @@ function gameOver() {
     if (gameEnd) {
         gameEnd = false;
         sounds.startSong.pause();
+        sounds.bossMusic.currentTime = 0;
         clearAllIntervalls();
-        document.getElementById('gameOverContainer').style = 'height: unset';
-        document.getElementById('gameover').style = ('background-image: url(img/gameover.jpg)');
-        document.getElementById('gameover').classList.remove('d-none');
-        document.getElementById('gameover').classList.add('flex');
+        getId('gameover').style = 'background: radial-gradient(circle, rgba(183,81,215,0.5396752450980392) 0%, rgba(0,229,254,0.8646052170868348) 30%)';
+        getId('gameover').innerHTML += '';
+        getId('gameover').classList.add('gameOverSection');
+        getId('gameover').classList.add('puff-in-hor');
+        getId('gameover').innerHTML += createEndScreen();
     }
 }
 
@@ -227,13 +260,17 @@ function gameOver() {
  * This function shows the Winning Section
  */
 function winGame() {
-    clearAllIntervalls();
-    sounds.startSong.pause();
-    document.getElementById('gameOverContainer').style = 'height: 500px';
-    document.getElementById('gameover').classList.remove('d-none');
-    document.getElementById('win').classList.remove('d-none');
-    document.getElementById('gameover').style = ('background-image: url(img/winner.webp)');
-    document.getElementById('gameover').classList.add('flex');
+    if (winningGame) {
+        winningGame = false;
+        clearAllIntervalls();
+        sounds.startSong.pause();
+        sounds.bossMusic.pause();
+        getId('gameover').style = 'background: radial-gradient(circle, rgba(250, 10, 243, 0.5396752450980392) 0%, rgba(0, 186, 254, 0.6741290266106443) 0%)';
+        getId('gameover').innerHTML = '';
+        getId('gameover').classList.add('gameOverSection');
+        getId('gameover').classList.add('puff-in-hor');
+        getId('gameover').innerHTML += createWinScreen();
+    }
 }
 
 /**
@@ -242,7 +279,9 @@ function winGame() {
 function restart() {
     sounds.bossMusic.pause();
     sounds.startSong.pause();
-    document.getElementById('gameover').classList.add('d-none');
+    getId('gameover').innerHTML = '';
+    getId('gameover').classList.remove('puff-in-hor');
+    getId('gameover').classList.remove('gameOverSection');
     init();
 }
 
@@ -250,11 +289,13 @@ function restart() {
  * This function is for going back to Startscreen
  */
 function exit() {
+    getId('gameover').innerHTML = '';
+    getId('gameover').classList.remove('puff-in-hor');
+    getId('gameover').classList.remove('gameOverSection');
+    getId('startscreen').classList.remove('fade-out-bck');
+    getId('startscreen').classList.remove('d-none');
     sounds.startSong.pause();
     sounds.bossMusic.pause();
-    document.getElementById('gameover').classList.add('flex');
-    document.getElementById('gameover').classList.add('d-none');
-    document.getElementById('startscreen').classList.remove('d-none');
 }
 
 

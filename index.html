@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharkie</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="/img/icons8-animal-64.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/icons8-animal-64.png" type="image/x-icon">
     <script defer src="./js/models/world.class.js"></script>
     <script defer src="./templates.js"></script>
     <script defer src="./js/models/drawable-object.class.js"></script>
@@ -28,13 +28,14 @@
     <script defer src="./js/game.js"></script>
 </head>
 
-<body onload="setListener()">
+<body onload="">
 
     <!-- Message for Mobile Phones -->
     <div class="msgContainer d-none">
-        <div class="instructionRotate">
-            <span>Please rotate your Phone</span>
-            <img src="img/phone.png">
+        <div class="phone">
+        </div>
+        <div class="message">
+            Please rotate your device!
         </div>
     </div>
 
@@ -45,7 +46,7 @@
 
         <!-- Header -->
         <div class="mainContainer">
-            <div class="startScreen" id="startscreen">
+            <div class="startScreen " id="startscreen">
                 <div class="headline">
                     <svg viewbox="0 0 100 20">
                         <defs>
@@ -77,42 +78,33 @@
 
                     <div class="info">
                         <img class="sharkie" src="img/sharkie-celebrating.png">
-                        <img class="information" onclick="openHowToPlay()" src="img/information-button.png" alt="">
                     </div>
-                    <div id="instructions"></div>
 
                 </div>
             </div>
 
-            <!-- Canvas and Buttons for mobile Phones -->
-            <div>
-                <div class="mainSettings">
-                    <div class="headerGame">
-                        <h2 onclick="exit()">Sharkie</h2>
-                    </div>
-
-                    <div class="audio">
-                        <img src="img/fullscreen.png" class="fullscreen" onclick="fullScreen()">
-                        <img src="img/mute.png" id="mute">
-                    </div>
+            <div class="mainSettings">
+                <div class="headerGame">
+                    <h2 onclick="exit()">Sharkie</h2>
                 </div>
+            </div>
 
+            <!-- Canvas and Buttons for mobile Phones -->
+            <div class="relative">
+                <div class="settings">
+                    <img src="img/settings.png" onclick="openSettingsBox()" id="settingImg">
+                    <div id="instructions"></div>
+                </div>
+                <div id="gameInstructions"></div>
                 <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
                 <div id="mobileInstructions"></div>
             </div>
         </div>
     </div>
 
+
     <!-- Game Overscreen -->
-    <div class="gameOverSection d-none" id="gameover">
-        <div class="gameOverContainer" id="gameOverContainer">
-            <h1 class="d-none" id="win">Congratulation You Win !</h1>
-            <div class="gameoverBtns">
-                <button class="glow-on-hover marginUnset" onclick="restart()"> Restart</button>
-                <button class="exit" onclick="exit()">X</button>
-            </div>
-        </div>
-    </div>
+    <div class="" id="gameover"></div>
 
 </body>
 
@@ -122,3 +114,4 @@
 <!-- <a href="https://de.freepik.com/fotos-kostenlos/blaues-und-transparentes-wasser-des-mittelmeers-sonnenlicht-mehrere-blasen_19615196.htm#query=wasser&position=19&from_view=keyword">Bild von frimufilms</a> auf Freepik -->
 <!-- <a href="https://www.flaticon.com/de/kostenlose-icons/rahmen" title="rahmen Icons">Rahmen Icons erstellt von Freepik - Flaticon</a> -->
 <!-- <a href="https://www.freepik.com/free-vector/game-with-glitch-effect_7997336.htm#query=game%20over&position=2&from_view=keyword">Image by dgim-studio</a> on Freepik -->
+<!-- <a target="_blank" href="https://icons8.com/icon/11678/dienstleistungen">Dienstleistungen</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->

@@ -1,5 +1,6 @@
 class Pufferfish extends movableObject {
 
+    world;
     height = 60;
     width = 60;
     offsets = {
@@ -10,8 +11,6 @@ class Pufferfish extends movableObject {
     };
     type;
     colour;
-    playBlowupAnimation = true;
-    fishShrinkAnimation = false;
     greenPuffer = {
         swimming: imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim', 5),
         transition: imagePathLoad('img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition', 5),
@@ -34,20 +33,19 @@ class Pufferfish extends movableObject {
     }
 
 
-    constructor(colour, x, y) {
+    constructor(colour, x, y, world) {
         super();
+        this.world = world;
         this.colour = colour;
         this.type = 'Puffer';
         this.reverse(7000);
         this.loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadAllImages();
-        // this.x = 350 + Math.random() * 2000;
         this.x = x;
         this.y = y;
-        this.animatePufferfish();
-        this.playBuffAnimation();
+        this.moveTillAggressive();
     }
-
+    // this.playAnimation(this.setImageByColour().bubbleSwimming);
 
     /**
      * loading all available Images of the different Pufferfishes
@@ -68,36 +66,6 @@ class Pufferfish extends movableObject {
     }
 
 
-    /**
-     * setting the Buff Animation
-     */
-    playBuffAnimation() {
-        stopableInterval(() => {
-            if (this.otherDirection) {
-                this.getSmall();
-            } else {
-                this.blowUp();
-            }
-        }, 250);
-    }
-
-
-    /**
-     * setting the blow up animation
-     */
-    blowUp() {
-        if (this.playBlowupAnimation) {
-            this.timeOutForTransition();
-            this.playBlowupAnimation = !this.playBlowupAnimation;
-
-            let j = setInterval(() => {
-                this.playAnimation(this.setImageByColour().bubbleSwimming);
-            }, 100);
-            this.timeForIntervalClear(j);
-            this.fishShrinkAnimation = true;
-        }
-    }
-
 
     /**
      * 
@@ -114,86 +82,17 @@ class Pufferfish extends movableObject {
     }
 
 
-    /**
-     * blowing down animation
-     */
-    getSmall() {
-        if (this.fishShrinkAnimation) {
-            this.timeOutForTransition();
-            this.fishShrinkAnimation = false;
-
-            let j = setInterval(() => {
-                this.playAnimation(this.setImageByColour().swimming);
-            }, 100);
-            this.timeForIntervalClear(j);
-            this.playBlowupAnimation = true;
-        }
-    }
-
-
-    /**
-     * animation for transition
-     */
-    timeOutForTransition() {
-        this.playAnimation(this.setImageByColour().transition);
-    }
-
-
-    /**
-     * 
-     * @param {intervall which has to be cleared} j 
-     */
-    timeForIntervalClear(j) {
-        setTimeout(() => {
-            clearInterval(j);
-        }, 6600);
-    }
-
-
-    /**
-     * animation for all pufferfishes and also dead animation
-     */
-    animatePufferfish() {
-        this.movingDirection();
-
-        stopableInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.setImageByColour().dead);
-                stopableInterval(() => {
-                    this.y -= 10;
-                    this.x -= 10;
-                }, 1000 / 60)
-            }
-        }, 200);
-    }
-
-
-    /**
-     * intervall for going up or going down
-     */
-    movingDirection() {
+    moveTillAggressive() {
         stopableInterval(() => {
             if (!this.otherDirection) {
-                this.swimForward();
+                this.playAnimation(this.setImageByColour().swimming);
+                this.x -= 4;
             } else {
-                this.swimBackward();
-            };
-        }, 100);
+                this.playAnimation(this.setImageByColour().bubbleSwimming);
+                this.x += 4;
+            }
+
+        }, 100)
     }
 
-
-    /**
-     * adding amount to x for going left
-     */
-    swimForward() {
-        this.x -= 4;
-    }
-
-
-    /**
-     * adding amount to x for going right
-     */
-    swimBackward() {
-        this.x += 4;
-    }
 }

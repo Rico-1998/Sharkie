@@ -16,7 +16,7 @@ class Character extends movableObject {
     swimming = imagePathLoad('img/1.Sharkie/3.Swim/', 6);
     attacking = imagePathLoad('img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/', 8);
     notMoving = imagePathLoad('img/1.Sharkie/1.IDLE/', 18);
-    sleeping = imagePathLoad('img/1.Sharkie/2.Long_IDLE/i', 14);
+    sleeping = imagePathLoad('img/1.Sharkie/2.Long_IDLE/I', 14);
     hurt = imagePathLoad('img/1.Sharkie/5.Hurt/1.Poisoned/', 4);
     hurtElectric = imagePathLoad('img/1.Sharkie/5.Hurt/2.Electric shock/', 3);
     dead = imagePathLoad('img/1.Sharkie/6.dead/1.Poisoned/', 12);
@@ -33,6 +33,7 @@ class Character extends movableObject {
         this.loadImage('img/1.Sharkie/1.IDLE/1.png');
         this.loadAllImages();
         this.animate();
+        this.slapAnimation();
     }
 
     /**
@@ -63,9 +64,10 @@ class Character extends movableObject {
      * checks if the character gets hurt by an enemy 
      */
     checkIfCharacterIsHurt() {
-        stopableInterval(() => {
-            this.checkForCharacterDeath();
-            if (this.isHurt() && !this.world.electricHit) {
+        let i = setInterval(() => {
+            if (this.isDead()) {
+                this.checkForCharacterDeath(i);
+            } else if (this.isHurt() && !this.world.electricHit) {
                 this.playAnimation(this.hurt);
                 sounds.hitSound.play();
             } else if (this.isHurt() && this.world.electricHit) {
@@ -73,22 +75,25 @@ class Character extends movableObject {
             } else {
                 this.playMovingAnimations();
             }
-        }, 250)
+        }, 200)
     }
 
 
     /**
      * checks if character is dead and if he is dead the game will be over
      */
-    checkForCharacterDeath() {
-        if (this.isDead()) {
-            this.playAnimation(this.dead);
-            setTimeout(() => {
-                gameEnd = true;
-                gameOver();
-            }, 2300);
-        }
+    checkForCharacterDeath(i) {
+        clearInterval(i);
+        this.playAnimation(this.dead);
+        stopableInterval(() => {
+            this.y -= 5;
+        }, 150)
+        setTimeout(() => {
+            gameEnd = true;
+            gameOver();
+        }, 2000);
     }
+
 
     /**
      * function for moving up
@@ -192,15 +197,22 @@ class Character extends movableObject {
         if (this.world.keyboard.D && this.timeForAttack < 8) {
             this.playAnimation(this.attacking);
             this.timeForAttack++;
+            this.time = new Date().getTime();
             sounds.soundWhileShoot.play();
         } else {
             this.timeForAttack = 0;
             sounds.soundWhileShoot.pause();
-            sounds.soundWhileShoot.load();
         }
-        if (this.world.keyboard.SPACE) {
-            this.playAnimation(this.slap);
-        }
+    }
+
+
+    slapAnimation() {
+        stopableInterval(() => {
+            if (this.world.keyboard.SPACE) {
+                this.playAnimation(this.slap);
+                this.time = new Date().getTime();
+            }
+        }, 100)
     }
 
 
@@ -208,10 +220,10 @@ class Character extends movableObject {
      * creating the Sleeping Function
      */
     fallindAsleep() {
-        if (!this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.D && !this.world.keyboard.SPACE) {
+        if (!this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
             this.playAnimation(this.notMoving);
             let timePass = new Date().getTime() - this.time;
-            if (timePass > 8000) {
+            if (timePass > 8000 && !gameEnd && !winningGame && !this.world.keyboard.D && !this.world.keyboard.SPACE) {
                 this.playAnimation(this.sleeping);
                 if (this.y > 300) {
                     this.y += 0;

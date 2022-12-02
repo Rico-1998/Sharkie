@@ -45,9 +45,9 @@ class Level {
         this.enemies.push(new Jellyfish('yellow', 1200));
         this.enemies.push(new Jellyfish('yellow', 2200));
         this.enemies.push(new Jellyfish('yellow', 1400));
-        this.enemies.push(new Pufferfish('green', 100, 100));
-        this.enemies.push(new Pufferfish('orange', 1750, 150));
-        this.enemies.push(new Pufferfish('red', 1000, 50));
+        this.enemies.push(new Pufferfish('green', 100, 100, this.world));
+        this.enemies.push(new Pufferfish('orange', 1750, 150, this.world));
+        this.enemies.push(new Pufferfish('red', 1000, 50, this.world));
         // }
         this.enemies.push(new Jellyfish('electric', this.world, 2700));
     }

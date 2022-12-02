@@ -1,171 +1,105 @@
 /**
  * 
- * @returns Html Part with Instructions for playing The Game
+ * @returns Html Part with Instructions
  */
-
-
-function createHowToPlaySection() {
+function settingsBox() {
     return /*html*/ `
-        <div class="playSection">
-            
-            <div class="content ">
-                <div class="howToPlay">
-                    <div></div>
-                    <h1>How to Play</h1>
-                    
-                    <div class="closingBox">
-                        <img src="img/secondary-plus.svg" onclick="closeHowToPlaySection()">
-                    </div>
-                </div>
+    <div class="settingsContainer">
 
-                <div class="movingInstructions">
+        <div class="closingImg" id="closingImg">
+            <img src="img/secondary-plus.svg" onclick="closeSettingsBox()">
+        </div>
 
-                    <div class="header"><h2>Moving</h2></div>
+        <div class="setting mobileFullscreen">
+            <span>Fullscreen</span>
+            <img src="img/fullscreen.png" class="fullscreen" onclick="fullScreen()">
+        </div>
 
-                    <table>
-                    <tr>
-                        <td>
-                            <div class="moveBox">
-                               <span>⬆</span>
-                            </div>
+        <div class="setting">
+            <span>Toggle Sound</span>
+            <img src="img/volume.png" id="mute" onclick="switchSound()">
+        </div>
 
-                            <div class="moveDirection">
-                               <span>Up</span>
-                            </div>
-                        </td>
-                    
-                        <td>
-                            <div class="moveBox">
-                               <span>⬇</span>
-                            </div>
-
-                        <div class="moveDirection">
-                               <span>Down</span>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="moveBox">
-                               <span>⬅</span>
-                            </div>
-
-                        <div class="moveDirection">
-                               <span>Left</span>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div class="moveBox">
-                               <span class="rotate">⬅</span>
-                            </div>
-
-                            <div class="moveDirection">
-                               <span>Right</span>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="attackContainer">
-                        <td>
-                        <div class="spaceBox">
-                            <span>Space</span>
-                        </div>
-
-                        <div class="moveDirection">
-                            <span>Slap Attack</span>
-                        </div>
-                        </td>
-
-                        <td>
-                        <div class="spaceBox ">
-                            <span>D</span>
-                        </div>
-
-                        <div class="moveDirection">
-                            <span>Bubble Attack</span>
-                        </div>
-                        </td>
-                    </tr>
-                    </table>
-                </div>
+        <div class="setting">
+            <span>How to play</span>
+            <img src="img/information-button.png" onclick="gameInstructios()">
+        </div>
+        
+    </div>
+    `
+}
 
 
-                <div class="tasks">
-                    <div class="header"><h2>Your Tasks</h2></div>
+/**
+ * creating HTML Part with game Instructions
+ */
+function createGameInstructions() {
+    return /*html*/`
+    <div class="flex">
+        <div class="playInstructions" id="playInstructions">
+            <div class="headerInstructions">
+                <h2>Instructions</h2>
+            </div>
+            <div class=" instructionBox">
+                <div>
 
-                    <div class="task">
-                        <div>
-                            <span class="description">Collect at least 5 Coins to be able to shoot a Simple Bubble</span>
-                            <img class="taskImg" src="img/4. Marcadores/1. Coins/1.png">
-                        </div>
-                    </div>
-
-                    <div class="task">
-                        <div>
-                            <span class="description">Collect 5 Poison Bottles to be able to shoot a Poison Bubble</span>
-                            <img class="taskImg" src="img/4. Marcadores/Posiขn/Animada/1.png">
-                        </div>
-                    </div>
-
-                    <div class="task">
-                        <div class="gifDiv setWidth">
-                            <span class="description">Kill the Jellys with Bubbles to avoid Damage</span>
-                            <img class="taskGif" src="img/2.Enemy/2 Jelly fish/Preview swim-dead.gif">
+                    <div class="instruction">
+                        <span>Move Sharkie</span>
+                        <div class="imgInstruction">
+                            <img class="move" src="img/6.Botones/Key/arrow keys.png">
                         </div>
                     </div>
                     
-                    <div class="task">
-                        <div class="gifDiv">
-                            <span class="description">Kill the Pufferfishes with a Slap to avoid Damage</span>
-                            <img class="taskGif" src="img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/Dead 1 proposal.gif">
+                    <div class="instruction">
+                        <span>Shoot Bubble</span>
+                        <div class="imgInstruction">
+                            <img class="shoot" src="img/6.Botones/Key/D key.png">
                         </div>
                     </div>
-
-                    <div class="task">
-                        <div class="gifDiv">
-                            <span class="description">Last but not least Kill The Endboss to Win the Game</span>
-                            <img class="endbossImg" src="img/2.Enemy/3 Final Enemy/1.Introduce/10.png">
+                    
+                    <div class="instruction">
+                        <span>Fin Slap</span>
+                        <div class="imgInstruction">
+                            <div class="space">SPACE</div>
                         </div>
                     </div>
-
-                    <div class="enemyContainer">
-
-                    <div class="header column">
-                        <h2>Enemies</h2>
-
-                            <div class="enemyBox">
-                                <div class="column">
-                                    <span>Purple Jelly</span>
-                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png">
-                                </div>
-                                
-                                <div class="column">
-                                    <span>Yellow Jelly</span>
-                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png">
-                                </div>
-
-                                <div class="column">
-                                    <span>Electric Jelly</span>
-                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Green 1.png">
-                                </div>
-
-
-                                <div class="column">
-                                    <span>Electric Jelly</span>
-                                    <img class="taskImg" src="img/2.Enemy/2 Jelly fish/S｣per dangerous/Pink 1.png">
-                                </div>
-
-                                <div class="column">
-                                    <span>Pufferfish</span>
-                                    <img class="taskImg" src="img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
+            </div>
+        </div>
+
+
+        <div class="box">
+                <div class="arrowBox">
+                    <img src="img/right-arrow.png" onclick="gameTarget()">
+                </div>
+
+                <div class="exitImg">
+                      <img src="img/secondary-plus.svg" onclick="closeInstructions()">
+                </div>
+             </div>
+    </div>
+    `
+}
+
+
+/**
+ * HTML part for game target section
+ */
+function createGameTarget() {
+    return /*html*/ `
+        <div class="targetBox ">
+            <h2>Goal of the Game</h2>
+            <span>Little Sharkie was separated from the others. Help him fight his way through the dark waters and beware of the evil jellyfish and beware of something even bigger.</span>
+
+            <div>
+                <h2>What to do</h2>
+                <span>collect at least 5 coins to gain the ability to shoot bubbles. collect another 5 poison bottles so you can shoot poison bubbles to defeat the final boss. 
+                jellys can be defeated with normal bubbles and pufferfishes must be hit with a fin slap.</span>
+            </div>
+
+            <div class="arrowBox top">
+                <img src="img/left-arrow.png" onclick="backToInstructions()">
             </div>
         </div>
     `
@@ -186,8 +120,43 @@ function createMobileSection() {
         </div>    
 
         <div class="attackKeys">
-            <button id="space" class="btn"><img class="space" src="img/space.png"></button>
+            <button id="space" class="btn"><img  src="img/space.png"></button>
             <button id="bubble" class="btn"><img class="bubble" src="img/1.Sharkie/4.Attack/Bubble trap/Bubble.png"></button>
         </div>
         `
+}
+
+
+/**
+ * creates The Html Part for the Endscreen
+ */
+function createEndScreen() {
+    return /*html*/ `
+    <div class="gameOverContainer">
+        <div class="looseMessage">
+            <img src="img/6.Botones/Tittles/Game Over/Recurso 11.png">
+        </div>
+
+        <div class="btnContainer">
+            <div class="btnBox">
+                <button class="glow-on-hover marginUnset" onclick="restart()"> Restart</button>
+                <button class="exit" onclick="exit()">X</button>
+            </div>
+        </div>    
+    </div>
+    `
+}
+
+
+function createWinScreen() {
+    return /*html*/ `
+    <div class="winContainer">
+        <div>
+            <div class="btnBox">
+                <button class="glow-on-hover marginUnset" onclick="restart()"> Restart</button>
+                <button class="exit" onclick="exit()">X</button>
+            </div>
+        </div>    
+    </div>
+    `
 }

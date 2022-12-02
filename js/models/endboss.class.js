@@ -26,7 +26,7 @@ class Endboss extends movableObject {
         this.loadAllImages();
         this.animate();
         this.attack();
-        this.isBossDead();
+        this.checkSounds();
     }
 
 
@@ -46,7 +46,7 @@ class Endboss extends movableObject {
      * animation and timing when it should be played
      */
     animate() {
-        stopableInterval(() => {
+        let i = setInterval(() => {
             if (this.world.character.x > 2500 && this.firstContact && this.counter < 8) {
                 this.playAnimation(this.incoming);
                 this.x = 3100;
@@ -54,6 +54,8 @@ class Endboss extends movableObject {
                 setTimeout(() => {
                     this.firstContact = false;
                 }, 300);
+            } else if (this.isDead()) {
+                this.isBossDead(i);
             } else if (this.isHurt()) {
                 this.playAnimation(this.hurt);
             } else {
@@ -67,16 +69,18 @@ class Endboss extends movableObject {
      * This function is for checking if The Endboss is dead and if he is the Game will be over
      * and the Winning Screen will be shown
      */
-    isBossDead() {
-        stopableInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.dead)
-                this.y -= 3;
-                setTimeout(() => {
-                    winGame();
-                }, 700);
-            }
-        }, 200);
+    isBossDead(i) {
+        if (this.isDead()) {
+            clearInterval(i);
+            this.playAnimation(this.dead)
+            stopableInterval(() => {
+                this.y -= 5;
+            }, 150)
+            setTimeout(() => {
+                winningGame = true;
+                winGame();
+            }, 1200);
+        }
     }
 
 
@@ -87,23 +91,32 @@ class Endboss extends movableObject {
         if (this.distanceX() < 400 && !this.firstContact) {
             this.playAnimation(this.attacking);
             if (this.x > 2100 && !this.world.character.otherDirection) {
-                sounds.startSong.pause();
-                sounds.bossMusic.play();
                 this.otherDirection = false;
-                this.x -= 7;
+                this.x -= 9;
                 this.y += 1.5;
-            } else if (this.world.character.x + this.world.character.left < this.x + this.width - this.offsets.right < 100) {
+            } else if (this.world.character.x + this.world.character.left < this.x + this.width - this.offsets.right < 2100) {
                 this.otherDirection = true
-                this.x += 7;
+                this.x += 9;
                 this.y -= 1.8;
             }
         } else {
             this.playAnimation(this.swimming);
-            sounds.bossMusic.pause();
-            // sounds.startSong.play();
         }
     }
 
+
+    /**
+     * sound settings
+     */
+    checkSounds() {
+        stopableInterval(() => {
+            if (soundOn && this.world.character.x > 2100) {
+                sounds.bossMusic.play();
+            } else if (!soundOn && this.world.character.x > 2100) {
+                sounds.bossMusic.pause();
+            }
+        }, 75);
+    }
 
     /**
      * 

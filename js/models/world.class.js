@@ -14,8 +14,6 @@ class World {
     bubbles = [];
     timeForAttack = true;
     electricHit = false;
-    woSounds = {
-    };
 
 
 
@@ -29,7 +27,19 @@ class World {
         this.draw();
         this.run();
         this.attackTime();
-        sounds.startSong.play();
+        this.backgroundSound();
+    }
+
+
+    backgroundSound() {
+        stopableInterval(() => {
+            if (soundOn && this.character.x < 2100) {
+                sounds.startSong.play();
+                sounds.bossMusic.pause();
+            } else {
+                sounds.startSong.pause();
+            }
+        }, 75);
     }
 
 
@@ -78,7 +88,7 @@ class World {
     checkForBubbles() {
         if (this.statusBarCoin.percentage == 100) {
             if (this.keyboard.D && this.timeForAttack) {
-                let bubble = new Bubble(this.character.x + 60, this.character.y + 80);
+                let bubble = new Bubble(this.character.x + 90, this.character.y + 80);
                 this.bubbles.push(bubble);
                 this.timeForAttack = false;
             }
@@ -106,7 +116,6 @@ class World {
         this.allObjects();
         this.allStatusBars()
         this.ctx.translate(-this.camera_x, 0);
-        // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -241,6 +250,7 @@ class World {
                 this.setDamage(2, false);
             }
             else if (this.character.isColliding(enemy, index) && enemy.type == 'electric' || this.character.isColliding(enemy, index) && enemy.type == 'electricPink') {
+                sounds.electricHit.play();
                 this.setDamage(5, true);
             }
         })
